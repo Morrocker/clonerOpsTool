@@ -1,0 +1,42 @@
+servers:
+  - name: alpha
+    category: server
+    hostIperf: true
+    location: century
+    port: 2279
+    localIp: 192.168.159.118
+    vpnIp: 192.168.201.102
+    externalIp: 190.216.149.
+  - name: bravo
+    category: server
+    hostIperf: true
+    location: century
+    port: 2279
+    localIp: 192.168.159.119
+    vpnIp: 192.168.201.103
+    externalIp: 190.216.149.
+  - name: charlie
+    category: server
+    hostIperf: true
+    location: century
+    port: 2279
+    localIp: 192.168.159.120
+    vpnIp: 192.168.201.104
+    externalIp: 190.216.149.
+  - name: delta
+    category: server
+    hostIperf: true
+    location: century
+    port: 2279
+    localIp: 192.168.159.125
+    vpnIp: 192.168.201.105
+    externalIp: 190.216.149.
+  - name: director
+    category: server
+    hostIperf: true
+    location: century
+    port: 2279
+    localIp: 192.168.159.114
+    vpnIp: 192.168.201.133
+    externalIp: 190.216.149.114
+
