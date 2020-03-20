@@ -8,10 +8,13 @@ import (
 )
 
 // SetMaster takes a server name and returns a server with the same name existing in the configuration file
-func SetMaster(n string, c Config) (Server, error) {
+func SetMaster(n, l string, c Config) (Server, error) {
 	var s Server
 	for _, server := range c.Servers {
-		if strings.Contains(n, server.Name) {
+		if !inLocation(l, server) {
+			continue
+		}
+		if strings.Contains(strings.ToLower(n), strings.ToLower(server.Name)) {
 			return server, nil
 		}
 	}
@@ -37,4 +40,11 @@ func StartMaster(s Server, p string, t string) string {
 	}
 	pid := string(temp)
 	return pid
+}
+
+func inLocation(l string, s Server) bool {
+	if strings.Contains(strings.ToLower(l), strings.ToLower(s.Location)) {
+		return true
+	}
+	return false
 }
