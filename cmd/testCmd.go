@@ -18,8 +18,6 @@ limitations under the License.
 
 import (
 	"fmt"
-	"log"
-	"os/exec"
 
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
@@ -37,24 +35,24 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("testCmd called")
-		callDf()
+		// callDf()
 	},
 }
 
-type config struct {
-	Servers []server
-}
+// type config struct {
+// 	Servers []server
+// }
 
-type server struct {
-	Name       string
-	Category   string
-	HostIperf  bool
-	Location   string
-	Port       int
-	LocalIP    string
-	VpnIP      string
-	ExternalIP string
-}
+// type server struct {
+// 	Name       string
+// 	Category   string
+// 	HostIperf  bool
+// 	Location   string
+// 	Port       int
+// 	LocalIP    string
+// 	VpnIP      string
+// 	ExternalIP string
+// }
 
 var author string
 
@@ -75,16 +73,16 @@ func init() {
 	viper.BindPFlag("author", testCmdCmd.Flags().Lookup("author"))
 }
 
-func callDf() {
-	var C config
-	cmd := exec.Command("ssh", "-p 2279", "192.168.201.127", "hostname")
-	out, err := cmd.Output()
-	fmt.Printf("output:%s", out)
-	log.Printf("Command finished with error: %v", err)
-	err = viper.Unmarshal(&C)
-	// str := viper.GetString("servers")
-	// for _, server := range C.Servers {
-	// 	fmt.Println(server)
-	// }
-	fmt.Println(viper.GetString("author"))
-}
+// func callDf() {
+// 	var C config
+// 	cmd := exec.Command("ssh", "-p 2279", "192.168.201.127", "hostname")
+// 	out, err := cmd.Output()
+// 	fmt.Printf("output:%s", out)
+// 	log.Printf("Command finished with error: %v", err)
+// 	err = viper.Unmarshal(&C)
+// 	// str := viper.GetString("servers")
+// 	// for _, server := range C.Servers {
+// 	// 	fmt.Println(server)
+// 	// }
+// 	fmt.Println(viper.GetString("author"))
+// }

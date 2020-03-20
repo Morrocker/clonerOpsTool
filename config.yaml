@@ -1,5 +1,6 @@
 servers:
   - name: alpha
+    user: ir
     category: server
     hostIperf: true
     location: century
@@ -8,6 +9,7 @@ servers:
     vpnIp: 192.168.201.102
     externalIp: 190.216.149.
   - name: bravo
+    user: ir
     category: server
     hostIperf: true
     location: century
@@ -16,6 +18,7 @@ servers:
     vpnIp: 192.168.201.103
     externalIp: 190.216.149.
   - name: charlie
+    user: ir
     category: server
     hostIperf: true
     location: century
@@ -24,6 +27,7 @@ servers:
     vpnIp: 192.168.201.104
     externalIp: 190.216.149.
   - name: delta
+    user: ir
     category: server
     hostIperf: true
     location: century
@@ -32,6 +36,7 @@ servers:
     vpnIp: 192.168.201.105
     externalIp: 190.216.149.
   - name: director
+    user: ir
     category: server
     hostIperf: true
     location: century
