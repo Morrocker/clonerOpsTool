@@ -16,6 +16,7 @@ type Server struct {
 	LocalIP    string
 	VpnIP      string
 	ExternalIP string
+	Os         string
 }
 
 // Master provides the structure to set a master server to do a netscan

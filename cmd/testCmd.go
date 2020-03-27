@@ -19,6 +19,7 @@ limitations under the License.
 import (
 	"fmt"
 
+	cm "github.com/clonerOpsTool/methods/common"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -36,6 +37,15 @@ to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("testCmd called")
 		// callDf()
+		// write()
+		for _, server := range cfg.Servers {
+			isHost, _ := cm.IsHost(server)
+			if isHost {
+				fmt.Printf("%s is the host.\n", server.Name)
+			} else {
+				fmt.Printf("%s is not the host.\n", server.Name)
+			}
+		}
 	},
 }
 
@@ -72,6 +82,22 @@ func init() {
 	testCmdCmd.Flags().StringVar(&author, "author", "YOUR NAME", "Author name for copyright attribution")
 	viper.BindPFlag("author", testCmdCmd.Flags().Lookup("author"))
 }
+
+// func write() {
+// 	var sheet = md.Sheet{
+// 		Name: "newsheet",
+// 		Data: [][]string{{"A", "B", "C"}, {"1", "2", "3", "4"}},
+// 	}
+// 	var xlsx = md.Xlsx{
+// 		Filename: "newtestfiles.xlsx",
+// 	}
+// 	xlsx.Sheets = append(xlsx.Sheets, sheet)
+// 	fmt.Println(xlsx.Filename)
+// 	fmt.Println(xlsx.Sheets[0].Name)
+// 	fmt.Println(xlsx.Sheets[0].Data)
+// 	md.WriteXlsx(xlsx)
+
+// }
 
 // func callDf() {
 // 	var C config

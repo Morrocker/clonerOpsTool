@@ -1,4 +1,94 @@
 servers:
+  - name: morocco-air
+    user: ir
+    category: laptop
+    hostIperf: true
+    location: home
+    port: 22
+    localIp: 192.168.0.17
+    vpnIp: 192.168.201.5
+    externalIp: 190.216.149.
+    os: macos
+  - name: morocco-mac
+    user: ir
+    category: station
+    hostIperf: true
+    location: cloner
+    port: 22
+    localIp: 192.168.0.167
+    vpnIp: 192.168.201.2
+    externalIp: 190.216.149.
+    os: macos
+  - name: zulu
+    user: ir
+    category: server
+    hostIperf: true
+    location: cloner
+    port: 2279
+    localIp: 192.168.0.230
+    vpnIp: 192.168.201.127
+    externalIp: 190.216.149.
+    os: linux
+  - name: yankee
+    user: ir
+    category: server
+    hostIperf: true
+    location: cloner
+    port: 2279
+    localIp: 192.168.0.231
+    vpnIp: 192.168.201.126
+    externalIp: 190.216.149.
+    os: linux
+  - name: xray
+    user: ir
+    category: server
+    hostIperf: true
+    location: cloner
+    port: 2279
+    localIp: 192.168.0.232
+    vpnIp: 192.168.201.125
+    externalIp: 190.216.149.
+    os: linux
+  - name: whiskey
+    user: ir
+    category: server
+    hostIperf: true
+    location: cloner
+    port: 2279
+    localIp: 192.168.0.233
+    vpnIp: 192.168.201.124
+    externalIp: 190.216.149.
+    os: linux
+  - name: devops
+    user: ir
+    category: server
+    hostIperf: true
+    location: cloner
+    port: 2279
+    localIp: 192.168.0.137
+    vpnIp: 192.168.201.4
+    externalIp: 190.216.149.
+    os: linux
+  - name: recoveries
+    user: ir
+    category: server
+    hostIperf: true
+    location: cloner
+    port: 2279
+    localIp: 192.168.0.200
+    vpnIp: 192.168.201.5
+    externalIp: 190.216.149.
+    os: linux
+  - name: fourier
+    user: ir
+    category: server
+    hostIperf: true
+    location: cloner
+    port: 2279
+    localIp: 192.168.0.1
+    vpnIp: 190.100.241.230
+    externalIp: 190.216.149.
+    os: linux
   - name: alpha
     user: ir
     category: server
@@ -8,6 +98,7 @@ servers:
     localIp: 192.168.159.118
     vpnIp: 192.168.201.102
     externalIp: 190.216.149.
+    os: linux
   - name: bravo
     user: ir
     category: server
@@ -17,6 +108,7 @@ servers:
     localIp: 192.168.159.119
     vpnIp: 192.168.201.103
     externalIp: 190.216.149.
+    os: linux
   - name: charlie
     user: ir
     category: server
@@ -26,6 +118,7 @@ servers:
     localIp: 192.168.159.120
     vpnIp: 192.168.201.104
     externalIp: 190.216.149.
+    os: linux
   - name: delta
     user: ir
     category: server
@@ -35,6 +128,7 @@ servers:
     localIp: 192.168.159.125
     vpnIp: 192.168.201.105
     externalIp: 190.216.149.
+    os: linux
   - name: director
     user: ir
     category: server
@@ -44,4 +138,36 @@ servers:
     localIp: 192.168.159.114
     vpnIp: 192.168.201.133
     externalIp: 190.216.149.114
+    os: linux
+  - name: zifre
+    user: ir
+    category: server
+    hostIperf: true
+    location: century
+    port: 2279
+    localIp: 192.168.159.116
+    vpnIp: 192.168.201.128
+    externalIp: 190.216.149.114
+    os: linux
+  - name: zifre2
+    user: ir
+    category: server
+    hostIperf: true
+    location: century
+    port: 2279
+    localIp: 192.168.159.117
+    vpnIp: 192.168.201.129
+    externalIp: 190.216.149.114
+    os: linux
+  - name: euler
+    user: ir
+    category: server
+    hostIperf: true
+    location: century
+    port: 2279
+    localIp: 192.168.159.1
+    vpnIp: 192.168.201.1
+    externalIp: 190.216.149.114
+    os: linux
+
 

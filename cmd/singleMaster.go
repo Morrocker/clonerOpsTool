@@ -2,8 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"strings"
 
-	"github.com/clonerOpsTool/methods"
+	nt "github.com/clonerOpsTool/methods/netscan"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -19,17 +20,27 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("singleMaster called")
-		m, err := methods.SetMaster(master, location, cfg)
+		fmt.Println("\nDoing single master scan")
+		var data [][]string
+		header := nt.CreateHeader(cfg, location)
+		data = append(data, header)
+
+		stopMaster, mst, err := nt.StartMaster(cfg, port, scantime, location, master)
 		if err != nil {
 			fmt.Println(err)
+			return
 		}
-		fmt.Printf("Master:%v", m)
+
+		row := nt.ScanServers(mst, port, scantime, location, cfg)
+		data = append(data, row)
+
+		stopMaster()
+		writeFile("SingleScan"+strings.Title(mst.Name), "data", data)
+		// fmt.Printf("%v", data)
 	},
 }
 
 var master string
-var m methods.Server
 
 func init() {
 	netScanCmd.AddCommand(singleMasterCmd)
@@ -38,3 +49,15 @@ func init() {
 	viper.BindPFlag("master", singleMasterCmd.PersistentFlags().Lookup("master"))
 	singleMasterCmd.MarkPersistentFlagRequired("master")
 }
+
+// func write(data [][]string) {
+// 	var sheet = md.Sheet{
+// 		Name: "Netscan " + master,
+// 		Data: data,
+// 	}
+// 	var xlsx = md.Xlsx{
+// 		Filename: "FullNetscanOn" + strings.Title(location) + ".xlsx",
+// 	}
+// 	xlsx.Sheets = append(xlsx.Sheets, sheet)
+// 	md.WriteXlsx(xlsx)
+// }

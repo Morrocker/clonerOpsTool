@@ -1,4 +1,4 @@
-package methods
+package ssh
 
 import (
 	"io"

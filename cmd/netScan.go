@@ -2,7 +2,9 @@ package cmd
 
 import (
 	"fmt"
+	"time"
 
+	xl "github.com/clonerOpsTool/methods/xlsx"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -33,4 +35,17 @@ func init() {
 	netScanCmd.PersistentFlags().StringVarP(&location, "location", "l", "", "A help for foo")
 	viper.BindPFlag("location", netScanCmd.PersistentFlags().Lookup("location"))
 	netScanCmd.MarkPersistentFlagRequired("location")
+}
+
+func writeFile(filename, sheetname string, data [][]string) {
+	today := time.Now().Format("2006-01-02")
+	var xlsx = xl.Xlsx{
+		Filename: filename + "." + today + ".xlsx",
+	}
+	var sheet = xl.Sheet{
+		Name: sheetname,
+		Data: data,
+	}
+	xlsx.Sheets = append(xlsx.Sheets, sheet)
+	xl.WriteXlsx(xlsx)
 }
