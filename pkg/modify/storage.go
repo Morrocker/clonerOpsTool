@@ -70,6 +70,10 @@ func ExecInstr(stores []st.Store, its st.Instructions) ([]st.Store, error) {
 					// fmt.Println("couldnt identify the value type")
 					// no match; here v has the same type as i
 				}
+				if value == "" {
+					fmt.Println("value is empty, skipping")
+					continue
+				}
 				// fmt.Printf("store: %s. key: %s, value:%v\n", store.Options.BasePath, key, value)
 				switch key {
 				case "capacity":
