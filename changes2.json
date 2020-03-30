@@ -1,0 +1,43 @@
+{
+
+  "Instructions":[
+    {
+      "fromStore":0,
+      "toStore":0,
+      "fromPort":0,
+      "toPort":0,
+      "targetURLS":["alpha","bravo","charlie","delta"],
+      "Store":{
+        "Capacity": "30",
+        "backend": "bar",
+        "basePath": "/storage500/point50",
+        "URL": "http://bravo.cloner.cl:4000",
+        "Magic": "cloner",
+        "CertFile": "key.pem",
+        "KeyFile": "cert.pem",
+        "Insecure": "true",
+        "Open": "true",
+        "Run": "true"
+      }
+    },
+    {
+      "fromStore":0,
+      "toStore":0,
+      "fromPort":0,
+      "toPort":0,
+      "targetURLS":["alpha","bravo","charlie","delta"],
+      "Store":{
+        "Capacity": "50",
+        "backend": "bar",
+        "basePath": "/storage300/point5",
+        "URL": "http://charlie.cloner.cl:4200",
+        "Magic": "cloner",
+        "CertFile": "key.pem",
+        "KeyFile": "cert.pem",
+        "Insecure": "true",
+        "Open": "true",
+        "Run": "true"
+      }
+    }
+  ]
+}

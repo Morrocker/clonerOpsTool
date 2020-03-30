@@ -1,0 +1,58 @@
+{
+  "Stores": [
+    {
+      "Capacity": 960000000000,
+      "Options": {
+        "backend": "disk",
+        "basePath": "/storage1/point1"
+      },
+      "URL": "https://alpha.cloner.cl:4001",
+      "Magic": "alpha_s1_1",
+      "CertFile": "/etc/letsencrypt/live/alpha.cloner.cl/fullchain.pem",
+      "KeyFile": "/etc/letsencrypt/live/alpha.cloner.cl/privkey.pem",
+      "Insecure": false,
+      "Open": false,
+      "Run": true
+    },
+    {
+      "Capacity": 960000000000,
+      "Options": {
+        "backend": "disk",
+        "basePath": "/storage1/point2"
+      },
+      "URL": "https://alpha.cloner.cl:4002",
+      "Magic": "alpha_s1_2",
+      "CertFile": "/etc/letsencrypt/live/alpha.cloner.cl/fullchain.pem",
+      "KeyFile": "/etc/letsencrypt/live/alpha.cloner.cl/privkey.pem",
+      "Insecure": false,
+      "Open": false,
+      "Run": true
+    },
+    {
+      "Capacity": 960000000000,
+      "Options": {
+        "backend": "disk",
+        "basePath": "/storage1/point3"
+      },
+      "URL": "https://alpha.cloner.cl:4003",
+      "Magic": "alpha_s1_3",
+      "CertFile": "/etc/letsencrypt/live/alpha.cloner.cl/fullchain.pem",
+      "KeyFile": "/etc/letsencrypt/live/alpha.cloner.cl/privkey.pem",
+      "Insecure": false,
+      "Open": false,
+      "Run": true
+    }
+  ],
+  "Backups": [
+  ],
+  "Master": {
+    "DSN": "dbname=blocks_master user=akori port=5432 sslmode=disable host=/var/run/postgresql",
+    "BackupCacheLimit": 0,
+    "BackupQueueLimit": 0,
+    "URL": "https://0.0.0.0:4000",
+    "Magic": "youarethebest",
+    "CertFile": "/etc/letsencrypt/live/alpha.cloner.cl/fullchain.pem",
+    "KeyFile": "/etc/letsencrypt/live/alpha.cloner.cl/privkey.pem",
+    "Insecure": false
+  }
+}

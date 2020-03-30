@@ -29,7 +29,10 @@ to quickly create a Cobra application.`,
 			fmt.Println(err)
 			return
 		}
+		// spew.Dump(instructions)
 
+		// fmt.Printf("%+v", config.Stores)
+		// return
 		_, err = mdfy.ExecInstr(config.Stores, instructions)
 		// Stores, err := mdfy.ExecInstr(config.Stores, instructions)
 		// spew.Dump(config)
@@ -40,9 +43,8 @@ to quickly create a Cobra application.`,
 		// 	return
 		// }
 
-		// spew.Dump(Stores[0])
+		// spew.Dump(Stores)
 		// spew.Dump(i)
-
 	},
 }
 
@@ -50,10 +52,5 @@ var instFile, stConf string
 
 func init() {
 	configEditorCmd.AddCommand(modifyCmd)
-
-	// modifyCmd.Flags().StringVarP(&key, "key", "k", "", "Help message for toggle")
-	// modifyCmd.Flags().StringVarP(&value, "value", "v", "", "Help message for toggle")
-	// modifyCmd.MarkFlagRequired("key")
-	// modifyCmd.MarkFlagRequired("value")
 	modifyCmd.Flags().StringVarP(&instFile, "instruction", "i", "changes.json", "Help message for toggle")
 }

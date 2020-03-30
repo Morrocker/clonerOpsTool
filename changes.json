@@ -8,18 +8,16 @@
       "toPort":4150,
       "targetURLS":["alpha","bravo"],
       "Store":{
-        "Capacity": "foo",
-        "Options": {
-          "backend": "bar",
-          "basePath": ""
-        },
-        "URL": "",
-        "Magic": "",
-        "CertFile": "",
-        "KeyFile": "",
-        "Insecure": "",
+        "Capacity": "30",
+        "backend": "bar",
+        "basePath": "/storage500/point50",
+        "URL": "point",
+        "Magic": "cloner",
+        "CertFile": "key.pem",
+        "KeyFile": "cert.pem",
+        "Insecure": "true",
         "Open": "true",
-        "Run": ""
+        "Run": "true"
       }
     },
     {
@@ -29,18 +27,16 @@
       "toPort":0,
       "targetURLS":["alpha","bravo"],
       "Store":{
-        "Capacity": "foo",
-        "Options": {
-          "backend": "bar",
-          "basePath": ""
-        },
-        "URL": "",
-        "Magic": "",
-        "CertFile": "",
-        "KeyFile": "",
-        "Insecure": "",
+        "Capacity": "1000",
+        "backend": "bar",
+        "basePath": "/storage500/point60",
+        "URL": "urlcool",
+        "Magic": "supermagic",
+        "CertFile": "cert.pem",
+        "KeyFile": "key.pem",
+        "Insecure": "false",
         "Open": "true",
-        "Run": ""
+        "Run": "false"
       }
     }
   ]

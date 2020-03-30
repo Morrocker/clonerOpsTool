@@ -45,7 +45,8 @@ type Instruction struct {
 
 type changeStore struct {
 	Capacity string `json:"Capacity"`
-	Options  option `json:"Options"`
+	Backend  string `json:"backend"`
+	BasePath string `json:"basePath"`
 	URL      string `json:"URL"`
 	Magic    string `json:"Magic"`
 	CertFile string `json:"CertFile"`
