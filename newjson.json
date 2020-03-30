@@ -1,7 +1,7 @@
 {
  "Stores": [
   {
-   "Capacity": 9600000,
+   "Capacity": 3000,
    "Options": {
     "backend": "disk",
     "basePath": "/storage1/point1"
@@ -11,11 +11,11 @@
    "CertFile": "/etc/letsencrypt/live/alpha.cloner.cl/fullchain.pem",
    "KeyFile": "/etc/letsencrypt/live/alpha.cloner.cl/privkey.pem",
    "Insecure": false,
-   "Open": false,
+   "Open": true,
    "Run": true
   },
   {
-   "Capacity": 9600000,
+   "Capacity": 3000,
    "Options": {
     "backend": "disk",
     "basePath": "/storage1/point2"
@@ -25,11 +25,11 @@
    "CertFile": "/etc/letsencrypt/live/alpha.cloner.cl/fullchain.pem",
    "KeyFile": "/etc/letsencrypt/live/alpha.cloner.cl/privkey.pem",
    "Insecure": false,
-   "Open": false,
+   "Open": true,
    "Run": true
   },
   {
-   "Capacity": 9600000,
+   "Capacity": 3000,
    "Options": {
     "backend": "disk",
     "basePath": "/storage1/point3"
@@ -39,11 +39,11 @@
    "CertFile": "/etc/letsencrypt/live/alpha.cloner.cl/fullchain.pem",
    "KeyFile": "/etc/letsencrypt/live/alpha.cloner.cl/privkey.pem",
    "Insecure": false,
-   "Open": false,
+   "Open": true,
    "Run": true
   },
   {
-   "Capacity": 9600000,
+   "Capacity": 3000,
    "Options": {
     "backend": "disk",
     "basePath": "/storage1/point4"
@@ -53,7 +53,7 @@
    "CertFile": "/etc/letsencrypt/live/alpha.cloner.cl/fullchain.pem",
    "KeyFile": "/etc/letsencrypt/live/alpha.cloner.cl/privkey.pem",
    "Insecure": false,
-   "Open": false,
+   "Open": true,
    "Run": true
   }
  ],

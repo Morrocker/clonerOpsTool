@@ -10,7 +10,6 @@ import (
 	"strings"
 
 	st "github.com/clonerOpsTool/pkg/structs"
-	"github.com/davecgh/go-spew/spew"
 )
 
 type storedata struct {
@@ -65,13 +64,14 @@ func ExecInstr(stores []st.Store, its st.Instructions) ([]st.Store, error) {
 				switch v := val.(type) {
 				case string:
 					value = v
-					// here v has type S
 				default:
-					// fmt.Println("couldnt identify the value type")
-					// no match; here v has the same type as i
+					err := errors.New("Only string types can be used on an instruction store conf")
+					if err != nil {
+						return Stores, err
+					}
 				}
 				if value == "" {
-					fmt.Println("value is empty, skipping")
+					// fmt.Println("value is empty, skipping")
 					continue
 				}
 				// fmt.Printf("store: %s. key: %s, value:%v\n", store.Options.BasePath, key, value)
@@ -116,9 +116,9 @@ func ExecInstr(stores []st.Store, its st.Instructions) ([]st.Store, error) {
 					fmt.Println("given key does not match any know storage key")
 				}
 			}
-			fmt.Println("")
+			// fmt.Println("")
 		}
-		spew.Dump(stores)
+		// spew.Dump(stores)
 	}
 	return stores, nil
 }
@@ -143,29 +143,6 @@ func getStoreParams(basepath, URL string) (storedata, error) {
 	data.storeNum = storeInt
 	data.pointNum = pointInt
 
-	// base, point := path.Split(basepath)
-	// pathArray := strings.Split(basepath, "/")
-	// store := pathArray[1]
-	// point := pathArray[2]
-	// store := path.Base(base)
-
-	// storeSplit := strings.Split(store, "e")
-	// storeInt, err := strconv.Atoi(storeSplit[1])
-	if err != nil {
-		return data, err
-	}
-	// data.storeNum = storeInt
-
-	// pointSplit := strings.Split(point, "t")
-	// pointInt, err := strconv.Atoi(pointSplit[1])
-	// if err != nil {
-	// 	return data, err
-	// }
-	// data.pointNum = pointInt
-	// if err != nil {
-	// 	return data, err
-	// }
-
 	fullURL, err := url.Parse(URL)
 	data.dns = fullURL.Hostname()
 	port, err := strconv.Atoi(fullURL.Port())
@@ -173,16 +150,6 @@ func getStoreParams(basepath, URL string) (storedata, error) {
 		return data, err
 	}
 	data.port = port
-	// httpSplit := strings.Split(url, "/")
-	// urlEnd := httpSplit[2]
-	// urlSplit := strings.Split(urlEnd, ":")
-
-	// data.dns = urlSplit[0]
-	// port, err := strconv.Atoi(urlSplit[1])
-	// if err != nil {
-	// 	return data, err
-	// }
-	// fmt.Printf("DNS: %v, Port: %v\n", data.dns, data.port)
 
 	return data, nil
 }

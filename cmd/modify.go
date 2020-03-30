@@ -19,6 +19,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
+		fmt.Printf("Modifying storage config %s according to instructions in %s\n", stConf, instFile)
 		config, err := cm.UploadStorageConf(stConf)
 		if err != nil {
 			fmt.Println(err)
@@ -29,28 +30,25 @@ to quickly create a Cobra application.`,
 			fmt.Println(err)
 			return
 		}
-		// spew.Dump(instructions)
 
-		// fmt.Printf("%+v", config.Stores)
-		// return
-		_, err = mdfy.ExecInstr(config.Stores, instructions)
-		// Stores, err := mdfy.ExecInstr(config.Stores, instructions)
+		Stores, err := mdfy.ExecInstr(config.Stores, instructions)
+		config.Stores = Stores
+
+		if outFile == "" {
+			cm.WriteJSON(stConf, config)
+		} else {
+			cm.WriteJSON(outFile, config)
+		}
+
 		// spew.Dump(config)
-
-		// NewStores, err := mdfy.Key(key, value, config.Stores, i)
-		// if err != nil {
-		// 	fmt.Println(err)
-		// 	return
-		// }
-
-		// spew.Dump(Stores)
 		// spew.Dump(i)
 	},
 }
 
-var instFile, stConf string
+var instFile, outFile, stConf string
 
 func init() {
 	configEditorCmd.AddCommand(modifyCmd)
 	modifyCmd.Flags().StringVarP(&instFile, "instruction", "i", "changes.json", "Help message for toggle")
+	modifyCmd.Flags().StringVarP(&outFile, "outputTo", "o", "", "Help message for toggle")
 }

@@ -16,7 +16,7 @@
         "CertFile": "",
         "KeyFile": "",
         "Insecure": "",
-        "Open": "false",
+        "Open": "",
         "Run": ""
       }
     }
