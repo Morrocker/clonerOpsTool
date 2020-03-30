@@ -9,13 +9,13 @@ import (
 	"strings"
 	"time"
 
-	md "github.com/clonerOpsTool/methods"
-	cm "github.com/clonerOpsTool/methods/common"
+	cm "github.com/clonerOpsTool/pkg/common"
+	st "github.com/clonerOpsTool/pkg/structs"
 )
 
 // StartMaster starts an Iperf listener on master server
-func StartMaster(cfg md.Config, port, scantime, location, name string) (func(), md.Server, error) {
-	var s md.Server
+func StartMaster(cfg st.Config, port, scantime, location, name string) (func(), st.Server, error) {
+	var s st.Server
 	var err error
 	var rmtCmd string
 	var cmd *exec.Cmd
@@ -83,7 +83,7 @@ Start:
 }
 
 // ScanServers receives a config variable and a "row" and scans through the servers given that they are not the master and are in the set location
-func ScanServers(mst md.Server, port, scantime, location string, cfg md.Config) []string {
+func ScanServers(mst st.Server, port, scantime, location string, cfg st.Config) []string {
 	row := []string{mst.Name}
 	for _, server := range cfg.Servers {
 		if mst.Name == server.Name {
@@ -106,7 +106,7 @@ func ScanServers(mst md.Server, port, scantime, location string, cfg md.Config) 
 }
 
 // RunScan takes a client server, master server, iperf port and scantime and runs a bidirectional net test
-func runScan(s, m md.Server, p string, t string) (string, error) {
+func runScan(s, m st.Server, p string, t string) (string, error) {
 	fmt.Printf("Running Iperf client on %s (%s) to %s (%s)\n", strings.Title(s.Name), s.LocalIP, strings.Title(m.Name), m.LocalIP)
 	ret := ""
 	pFlag := "-p " + s.Port
@@ -138,7 +138,7 @@ func runScan(s, m md.Server, p string, t string) (string, error) {
 }
 
 // CreateHeader Takes the servers config and location and returns a header to append
-func CreateHeader(cfg md.Config, location string) []string {
+func CreateHeader(cfg st.Config, location string) []string {
 	var header = []string{""}
 	for _, server := range cfg.Servers {
 		if !inLocation(location, server) {
@@ -166,7 +166,7 @@ func readStuff(scanner *bufio.Scanner) string {
 	return ret
 }
 
-func inLocation(l string, s md.Server) bool {
+func inLocation(l string, s st.Server) bool {
 	if strings.ToLower(l) == strings.ToLower(s.Location) {
 		return true
 	}

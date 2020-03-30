@@ -19,7 +19,7 @@ limitations under the License.
 import (
 	"fmt"
 
-	cm "github.com/clonerOpsTool/methods/common"
+	cm "github.com/clonerOpsTool/pkg/common"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

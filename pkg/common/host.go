@@ -3,11 +3,11 @@ package common
 import (
 	"net"
 
-	md "github.com/clonerOpsTool/methods"
+	st "github.com/clonerOpsTool/pkg/structs"
 )
 
 // IsHost checks if the device running the application is part of the scanned
-func IsHost(s md.Server) (bool, error) {
+func IsHost(s st.Server) (bool, error) {
 	ifaces, err := net.Interfaces()
 	if err != nil {
 		return false, err

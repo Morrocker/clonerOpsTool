@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	xl "github.com/clonerOpsTool/methods/xlsx"
+	xl "github.com/clonerOpsTool/pkg/xlsx"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )

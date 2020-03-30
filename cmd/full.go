@@ -3,7 +3,7 @@ package cmd
 import (
 	"fmt"
 
-	nt "github.com/clonerOpsTool/methods/netscan"
+	nt "github.com/clonerOpsTool/pkg/netscan"
 	"github.com/spf13/cobra"
 )
 

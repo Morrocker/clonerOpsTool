@@ -1,0 +1,47 @@
+{
+
+  "Instructions":[
+    {
+      "fromStore":5,
+      "toStore":30,
+      "fromPort":4100,
+      "toPort":4150,
+      "targetURLS":["alpha","bravo"],
+      "Store":{
+        "Capacity": "foo",
+        "Options": {
+          "backend": "bar",
+          "basePath": ""
+        },
+        "URL": "",
+        "Magic": "",
+        "CertFile": "",
+        "KeyFile": "",
+        "Insecure": "",
+        "Open": "true",
+        "Run": ""
+      }
+    },
+    {
+      "fromStore":15,
+      "toStore":20,
+      "fromPort":4000,
+      "toPort":0,
+      "targetURLS":["alpha","bravo"],
+      "Store":{
+        "Capacity": "foo",
+        "Options": {
+          "backend": "bar",
+          "basePath": ""
+        },
+        "URL": "",
+        "Magic": "",
+        "CertFile": "",
+        "KeyFile": "",
+        "Insecure": "",
+        "Open": "true",
+        "Run": ""
+      }
+    }
+  ]
+}

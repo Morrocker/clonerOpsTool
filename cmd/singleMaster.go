@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"strings"
 
-	nt "github.com/clonerOpsTool/methods/netscan"
+	nt "github.com/clonerOpsTool/pkg/netscan"
 	"github.com/spf13/cobra"
 	"github.com/spf13/viper"
 )
@@ -49,15 +49,3 @@ func init() {
 	viper.BindPFlag("master", singleMasterCmd.PersistentFlags().Lookup("master"))
 	singleMasterCmd.MarkPersistentFlagRequired("master")
 }
-
-// func write(data [][]string) {
-// 	var sheet = md.Sheet{
-// 		Name: "Netscan " + master,
-// 		Data: data,
-// 	}
-// 	var xlsx = md.Xlsx{
-// 		Filename: "FullNetscanOn" + strings.Title(location) + ".xlsx",
-// 	}
-// 	xlsx.Sheets = append(xlsx.Sheets, sheet)
-// 	md.WriteXlsx(xlsx)
-// }

@@ -3,8 +3,6 @@ package cmd
 import (
 	"fmt"
 
-	cm "github.com/clonerOpsTool/methods/common"
-	"github.com/davecgh/go-spew/spew"
 	"github.com/spf13/cobra"
 )
 
@@ -20,16 +18,8 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("configEditor called")
-		config, err := cm.UploadJSON(stConf)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		spew.Dump(config)
 	},
 }
-
-var stConf string
 
 func init() {
 	rootCmd.AddCommand(configEditorCmd)
