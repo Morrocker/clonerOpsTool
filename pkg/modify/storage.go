@@ -29,11 +29,19 @@ func ExecInstr(stores []st.Store, its st.Instructions) ([]st.Store, error) {
 				return Stores, err
 			}
 
-			if it.FromPort != 0 && (params.port < it.FromPort || params.port > it.ToPort) {
+			if it.FromPort != 0 && params.port < it.FromPort {
 				// fmt.Printf("Store port:%v, From port:%v, To port:%v\n", params.port, it.FromPort, it.ToPort)
 				continue
 			}
-			if it.FromStore != 0 && (params.storeNum < it.FromStore || params.storeNum > it.ToStore) {
+			if it.ToPort != 0 && params.port > it.ToPort {
+				// fmt.Printf("Store port:%v, From port:%v, To port:%v\n", params.port, it.FromPort, it.ToPort)
+				continue
+			}
+			if it.FromStore != 0 && params.storeNum < it.FromStore {
+				// fmt.Printf("Store num:%v, From store:%v, To store:%v\n", params.storeNum, it.FromStore, it.ToStore)
+				continue
+			}
+			if it.ToStore != 0 && params.storeNum > it.ToStore {
 				// fmt.Printf("Store num:%v, From store:%v, To store:%v\n", params.storeNum, it.FromStore, it.ToStore)
 				continue
 			}
