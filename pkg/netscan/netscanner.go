@@ -15,23 +15,13 @@ import (
 
 // StartMaster starts an Iperf listener on master server
 func StartMaster(cfg st.Config, port, scantime, location, name string) (func(), st.Server, error) {
-	var s st.Server
-	var err error
 	var rmtCmd string
 	var cmd *exec.Cmd
-	for _, server := range cfg.Servers {
-		if !inLocation(location, server) {
-			continue
-		}
-		if strings.ToLower(name) == strings.ToLower(server.Name) {
-			s = server
-			goto Start
-		}
+	s, err := GetServer(cfg, name, location)
+	if err != nil {
+		return func() {}, s, err
 	}
-	err = errors.New("Master server not found in configuration list")
-	return func() {}, s, err
 
-Start:
 	pFlag := "-p " + s.Port
 	addr := s.User + "@" + s.VpnIP
 	fmt.Printf("Starting Iperf Master in %s (%s)\n", strings.Title(name), s.LocalIP)
@@ -40,8 +30,7 @@ Start:
 	if err != nil {
 		return func() {}, s, err
 	}
-	// fmt.Printf("ishost: %v", isHost)
-	// fmt.Println("passed ishost")
+
 	if isHost {
 		rmtCmd = "iperf -s -p " + port
 		cmd = exec.Command(rmtCmd)
@@ -55,24 +44,22 @@ Start:
 		}
 		cmd = exec.Command("ssh", pFlag, addr, rmtCmd)
 	}
-	// fmt.Println("checked ishost")
 
 	err = cmd.Start()
-	// fmt.Println("cmd started")
 	if err != nil {
 		return func() {}, s, err
 	}
+
 	time.Sleep(2 * time.Second)
 	cmd2 := exec.Command("ssh", pFlag, addr, "pgrep iperf")
 	temp, err := cmd2.Output()
-	// fmt.Println("cmd2 started")
 	if err != nil {
 		return func() {}, s, err
 	}
+
 	pid := string(temp)
 	fmt.Printf("Master started. PID: %s \n", pid)
 	return func() {
-		// fmt.Println("Stopping master")
 		cmd := exec.Command("ssh", pFlag, addr, "sudo kill -9 "+pid)
 		err := cmd.Run()
 		if err != nil {
@@ -94,32 +81,41 @@ func ScanServers(mst st.Server, port, scantime, location string, cfg st.Config) 
 			continue
 		}
 
-		output, err := runScan(server, mst, port, scantime)
+		output, err := RunScan(server, mst, port, scantime)
 		if err != nil {
 			fmt.Printf("Error while running iperf server: %s", err)
 		}
 		row = append(row, output)
-		fmt.Printf("Output: %s\n", output)
 	}
 	return row
 
 }
 
 // RunScan takes a client server, master server, iperf port and scantime and runs a bidirectional net test
-func runScan(s, m st.Server, p string, t string) (string, error) {
+func RunScan(s, m st.Server, p string, t string) (string, error) {
 	fmt.Printf("Running Iperf client on %s (%s) to %s (%s)\n", strings.Title(s.Name), s.LocalIP, strings.Title(m.Name), m.LocalIP)
-	ret := ""
+	var cmd *exec.Cmd
+	var ret, rmtCmd string
 	pFlag := "-p " + s.Port
 	addr := s.User + "@" + s.VpnIP
-	rmtCmd := ""
-	if s.Os == "macos" {
-		rmtCmd = "/usr/local/bin/iperf -c " + m.LocalIP + " -p " + p
 
-	} else {
-		rmtCmd = "iperf -c " + m.LocalIP + " -p " + p
-
+	isHost, err := cm.IsHost(s)
+	if err != nil {
+		return "", err
 	}
-	cmd := exec.Command("ssh", pFlag, addr, rmtCmd)
+	if isHost {
+		rmtCmd = "iperf -c " + m.LocalIP + " -p " + p
+		cmd = exec.Command(rmtCmd)
+	} else {
+		if s.Os == "macos" {
+			rmtCmd = "/usr/local/bin/iperf -c " + m.LocalIP + " -p " + p
+
+		} else {
+			rmtCmd = "iperf -c " + m.LocalIP + " -p " + p
+
+		}
+		cmd = exec.Command("ssh", pFlag, addr, rmtCmd)
+	}
 	// cmd.Stdout = os.Stdout
 	out, err := cmd.StdoutPipe()
 	if err != nil {
@@ -134,6 +130,7 @@ func runScan(s, m st.Server, p string, t string) (string, error) {
 	ret = readStuff(scanner)
 	cmd.Wait() // }
 
+	fmt.Printf("Output: %s\n", ret)
 	return ret, nil
 }
 
@@ -150,6 +147,22 @@ func CreateHeader(cfg st.Config, location string) []string {
 
 }
 
+// GetServer adfasdf asfda
+func GetServer(cfg st.Config, name, location string) (st.Server, error) {
+	var s st.Server
+	for _, server := range cfg.Servers {
+		if !inLocation(location, server) {
+			continue
+		}
+		if strings.ToLower(name) == strings.ToLower(server.Name) {
+			s = server
+			return s, nil
+		}
+	}
+	err := errors.New("Master server not found in configuration list")
+	return s, err
+}
+
 func readStuff(scanner *bufio.Scanner) string {
 	var ret string
 	for scanner.Scan() {
@@ -157,7 +170,6 @@ func readStuff(scanner *bufio.Scanner) string {
 		if strings.Contains(text, "Bytes") || strings.Contains(text, "bits") {
 			words := strings.Fields(text)
 			ret = words[6] + " " + words[7]
-			// fmt.Println(w)
 		}
 	}
 	if err := scanner.Err(); err != nil {

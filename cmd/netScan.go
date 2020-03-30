@@ -24,6 +24,7 @@ to quickly create a Cobra application.`,
 }
 
 var port, scantime, location string
+var master, client string
 
 func init() {
 	rootCmd.AddCommand(netScanCmd)

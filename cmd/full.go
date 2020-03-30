@@ -17,7 +17,7 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("\nDoing full location scan")
+		fmt.Printf("\nDoing full location scan on %s\n", location)
 		var data [][]string
 		header := nt.CreateHeader(cfg, location)
 		data = append(data, header)
@@ -37,7 +37,6 @@ to quickly create a Cobra application.`,
 			stopMaster()
 		}
 		writeFile("FullScan", "data", data)
-		// fmt.Printf("%v", data)
 	},
 }
 

@@ -76,7 +76,7 @@ servers:
     location: cloner
     port: 2279
     localIp: 192.168.0.200
-    vpnIp: 192.168.201.5
+    vpnIp: 192.168.201.136
     externalIp: 190.216.149.
     os: linux
   - name: fourier

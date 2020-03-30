@@ -36,11 +36,8 @@ to quickly create a Cobra application.`,
 
 		stopMaster()
 		writeFile("SingleScan"+strings.Title(mst.Name), "data", data)
-		// fmt.Printf("%v", data)
 	},
 }
-
-var master string
 
 func init() {
 	netScanCmd.AddCommand(singleMasterCmd)
