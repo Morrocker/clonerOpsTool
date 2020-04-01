@@ -9,13 +9,10 @@ import (
 
 var fullCmd = &cobra.Command{
 	Use:   "full",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Escaneo cruzado entre todos los dispositivos de una red local",
+	Long: `singleMaster realiza un analisis cruzado de trafico de red entre todos los dispositivos
+de una red local. El resultado es devuelto a traves de la terminal y adicionalmente se escribe un 
+archivo de salida tipo .xlsx con el nombre FullScan.[fechaActual].xlsx`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("\nDoing full location scan on %s\n", location)
 		var data [][]string

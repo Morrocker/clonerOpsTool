@@ -27,7 +27,7 @@ func ExecInstr(stores []st.Store, its st.Instructions) ([]st.Store, error) {
 		// fmt.Printf("Executing instruction #%v. Params: Port:%d/%d, Store: %d/%d, Target:%v\n", z, it.FromPort, it.ToPort, it.FromStore, it.ToStore, it.TargetURLS)
 		for i, store := range stores {
 			// fmt.Printf("checking store: %s\n", store.URL)
-			params, err := getStoreParams(store.Options.BasePath, store.URL)
+			params, err := getStoreParams(store)
 			if err != nil {
 				return Stores, err
 			}
@@ -123,7 +123,9 @@ func ExecInstr(stores []st.Store, its st.Instructions) ([]st.Store, error) {
 	return stores, nil
 }
 
-func getStoreParams(basepath, URL string) (storedata, error) {
+func getStoreParams(store st.Store) (storedata, error) {
+	basepath := store.Options.BasePath
+	URL := store.URL
 	var data storedata
 	// fmt.Println(basepath)
 
@@ -158,4 +160,68 @@ func getNumbers(str string) []string {
 	re := regexp.MustCompile(`\d[\d]*`)
 	submatchall := re.FindAllString(str, -1)
 	return submatchall
+}
+
+// GetLastPort asdfas sadfasfas asdfasfd
+func GetLastPort(name string, stores []st.Store) (int, error) {
+	lastPort := 0
+	for _, store := range stores {
+		if !strings.Contains(store.URL, name) {
+			continue
+		}
+		stData, err := getStoreParams(store)
+		if err != nil {
+			return 0, err
+		}
+		if lastPort < stData.port {
+			lastPort = stData.port
+			continue
+		} else if lastPort == stData.port {
+
+			fmt.Printf("Port %d duplicated in config. Check manually to fix inconsistency or possible error", lastPort)
+			err := errors.New("Port duplicated in config. Check manually to fix inconsistency or possible error")
+			return 0, err
+		}
+	}
+	return lastPort, nil
+}
+
+// GetStoreCluster asfdas asdfadfa sdf a
+func GetStoreCluster(svName string, stNum int, stores []st.Store) ([]st.Store, error) {
+	var stFound []st.Store
+
+	for _, store := range stores {
+		if !strings.Contains(store.URL, svName) {
+			continue
+		}
+		stData, err := getStoreParams(store)
+		if err != nil {
+			return stFound, err
+		}
+		if stNum == stData.storeNum {
+			stFound = append(stFound, store)
+		}
+	}
+	return stFound, nil
+}
+
+// GetLastPoint asdfklj alsdfka lfdk alskdfja
+func GetLastPoint(stores []st.Store) (int, error) {
+	var lastPoint int
+	for _, store := range stores {
+		stData, err := getStoreParams(store)
+		if err != nil {
+			return 0, err
+		}
+		if lastPoint < stData.pointNum {
+			lastPoint = stData.pointNum
+			continue
+		} else if lastPoint == stData.pointNum {
+
+			fmt.Printf("Point %d duplicated in config %v.\n Check manually to fix inconsistency or possible error", lastPoint, store)
+			err := errors.New("point duplicated in config. Check manually to fix inconsistency or possible error")
+			return 0, err
+		}
+	}
+	return lastPoint, nil
 }

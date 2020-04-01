@@ -1,29 +1,30 @@
 package cmd
 
 import (
-	"fmt"
-
 	"github.com/spf13/cobra"
 )
 
 // configEditorCmd represents the configEditor command
 var configEditorCmd = &cobra.Command{
 	Use:   "configEditor",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Editor de configuracion de Block Server",
+	Long: `configEditor permite la edicion de archivos de configuracion 
+utilizados por el servicio Block Server. Requiere de un archivo de configuracion como
+entrada, a partir del cual se pueden realizar operaciones, como el cambio de un parametro
+a lo largo del todo el archivo. 
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+La herramienta permite cierta granularidad en los cambios a realizar pudiendo restringir 
+los storagepoints cuyos parametros son afectados.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("configEditor called")
+		// fmt.Println("configEditor called")
 	},
 }
+
+var stConf, svName string
 
 func init() {
 	rootCmd.AddCommand(configEditorCmd)
 
-	configEditorCmd.PersistentFlags().StringVarP(&stConf, "storageconf", "s", "storage_config.json", "A help for foo")
-	// viper.BindPFlag("storageconf", configEditorCmd.PersistentFlags().Lookup("storageconf"))
+	configEditorCmd.PersistentFlags().StringVarP(&stConf, "storeConf", "c", "storage_config.json", "Archivo de configuracion de Block Server de entrada (requerido)")
+	configEditorCmd.MarkFlagRequired("storeConf")
 }

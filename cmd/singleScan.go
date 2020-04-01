@@ -11,13 +11,10 @@ import (
 // singleScanCmd represents the singleScan command
 var singleScanCmd = &cobra.Command{
 	Use:   "singleScan",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Escaneo acotado a dos dispositivos",
+	Long: `singleScan realiza un analisis de trafico de red entre 2 dispositivos:
+Un maestro que hace de servidor y un cliente que prueba el trafico. El resultado es
+devuelto a traves de la terminal. No se escriben archivos de salida.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
 		stopMaster, mst, err := nt.StartMaster(cfg, port, scantime, location, master)
@@ -37,11 +34,11 @@ to quickly create a Cobra application.`,
 func init() {
 	netScanCmd.AddCommand(singleScanCmd)
 
-	singleScanCmd.PersistentFlags().StringVarP(&master, "master", "m", "", "A help for foo")
+	singleScanCmd.PersistentFlags().StringVarP(&master, "master", "m", "", "Nombre del servidor maestro (requerido)")
 	viper.BindPFlag("master", singleScanCmd.PersistentFlags().Lookup("master"))
 	singleScanCmd.MarkPersistentFlagRequired("master")
 
-	singleScanCmd.PersistentFlags().StringVarP(&client, "client", "c", "", "A help for foo")
+	singleScanCmd.PersistentFlags().StringVarP(&client, "client", "c", "", "Nombre del cliente (requerido)")
 	viper.BindPFlag("client", singleScanCmd.PersistentFlags().Lookup("client"))
 	singleScanCmd.MarkPersistentFlagRequired("client")
 }

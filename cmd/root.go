@@ -16,16 +16,20 @@ var cfg st.Config
 
 var rootCmd = &cobra.Command{
 	Use:   "clonerOpsTool",
-	Short: "A brief description of your application",
-	Long: `A longer description that spans multiple lines and likely contains
-examples and usage of using your application. For example:
+	Short: "",
+	Long: `clonerOpsTool es una herramienta desarrollada para asistir en las tareas 
+rutinarias realizadas por el equipo de operaciones. Esta compuesto de multiples herramientas
+individuales que han sido necesarias para automatizar las tareas de operaciones en la empresa
+Cloner Spa.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Para su uso se estabecen los siguientes supuestos:
+- El dispositivo donde se ejecuta la herramienta cuenta con acceso SSH a todos los dispositivos
+sobre los cuales se realizan operaciones. Adicionalmente, muchas de las operaciones requieren 
+sudo para su ejecucion
+- Los dispositivos sobre los cuales se pueden realizar operaciones se deben especificar en un 
+archivo de configuracion y se les hace referencia por nombre
+`,
 	Run: func(cmd *cobra.Command, args []string) {
-		// fmt.Println("Runned")
-		// fmt.Printf("Config: %v", cfg)
 	},
 }
 
@@ -41,8 +45,7 @@ func Execute() {
 func init() {
 	cobra.OnInitialize(initConfig)
 
-	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "config file (default is $HOME/.clonerOpsTool.yaml)")
-	rootCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	rootCmd.PersistentFlags().StringVar(&cfgFile, "config", "", "Archivo de configuracion basal, por defecto es 'clonerOpsTool.yaml'.")
 }
 
 // initConfig reads in config file and ENV variables if set.

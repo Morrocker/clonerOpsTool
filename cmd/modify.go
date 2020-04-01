@@ -11,13 +11,15 @@ import (
 // modifyCmd represents the modify command
 var modifyCmd = &cobra.Command{
 	Use:   "modify",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
+	Short: "Modifica los parametros de uno o mas storages",
+	Long: `modify permite modificar los parametros de los storages
+en un archivo de configuracion de Block Server, entregando como resultado el archivo 
+modificado o un archivo distinto, dependiendo de la opcion utilizada.
 
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+Para realizar las modificaciones se debe proveer a la herramienta un archivo con las
+instrucciones a seguir. Este permite especificar el rango de storages que seran 
+modificados y sus valores correspondientes. Las instrucciones permiten realizar varias 
+modificaciones en cadena.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Printf("Modifying storage config %s according to instructions in %s\n", stConf, instFile)
 		config, err := cm.UploadStorageConf(stConf)
@@ -45,10 +47,11 @@ to quickly create a Cobra application.`,
 	},
 }
 
-var instFile, outFile, stConf string
+var instFile, outFile string
 
 func init() {
 	configEditorCmd.AddCommand(modifyCmd)
-	modifyCmd.Flags().StringVarP(&instFile, "instruction", "i", "changes.json", "Help message for toggle")
-	modifyCmd.Flags().StringVarP(&outFile, "outputTo", "o", "", "Help message for toggle")
+	modifyCmd.Flags().StringVarP(&instFile, "instruction", "i", "changes.json", "Archivo de intrucciones para el cambio en las configuraciones (requerido)")
+	modifyCmd.MarkFlagRequired("instruction")
+	modifyCmd.Flags().StringVarP(&outFile, "outputTo", "o", "", "Nombre del archivo resultante del cambio. Por defecto sobreescribe el archivo de origen")
 }

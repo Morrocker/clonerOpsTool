@@ -12,13 +12,11 @@ import (
 // singleMasterCmd represents the singleMaster command
 var singleMasterCmd = &cobra.Command{
 	Use:   "singleMaster",
-	Short: "A brief description of your command",
-	Long: `A longer description that spans multiple lines and likely contains examples
-and usage of using your command. For example:
-
-Cobra is a CLI library for Go that empowers applications.
-This application is a tool to generate the needed files
-to quickly create a Cobra application.`,
+	Short: "Escaneo de una ubicacion, todos contra UN servidor maestro",
+	Long: `singleMaster realiza un analisis de trafico de red entre todos los dispositivos
+de una red local y un servidor maestro en la misma. El resultado es devuelto a traves de la 
+terminal y adicionalmente se escribe un archivo de salida tipo .xlsx con el nombre 
+SingleScan.[nombreMaestro].[fechaActual].xlsx`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("\nDoing single master scan")
 		var data [][]string
@@ -42,7 +40,7 @@ to quickly create a Cobra application.`,
 func init() {
 	netScanCmd.AddCommand(singleMasterCmd)
 
-	singleMasterCmd.PersistentFlags().StringVarP(&master, "master", "m", "", "A help for foo")
+	singleMasterCmd.PersistentFlags().StringVarP(&master, "master", "m", "", "Nombre del servidor maestro (requerido)")
 	viper.BindPFlag("master", singleMasterCmd.PersistentFlags().Lookup("master"))
 	singleMasterCmd.MarkPersistentFlagRequired("master")
 }
