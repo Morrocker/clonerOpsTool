@@ -1,122 +1,216 @@
-package methods
+package netscan
 
 import (
 	"bufio"
 	"errors"
 	"fmt"
+	"net"
 	"os"
 	"os/exec"
 	"strings"
 	"time"
-
-	cm "github.com/clonerOpsTool/pkg/common"
-	st "github.com/clonerOpsTool/pkg/structs"
 )
 
-// StartMaster starts an Iperf listener on master server
-func StartMaster(cfg st.Config, port, scantime, location, name string) (func(), st.Server, error) {
+// ServerList provides the structure to store the configuration file information
+type ServerList struct {
+	Servers []Server
+}
+
+type nsParams struct {
+	site     string
+	port     string
+	scantime string
+	pid      string
+}
+
+// Server provides the structure to store any server to be used
+type Server struct {
+	Name       string
+	User       string
+	Category   string
+	HostIperf  bool
+	Site       string
+	SSHPort    string
+	LocalIP    string
+	VpnIP      string
+	ExternalIP string
+	Os         string
+}
+
+// ScanMaster provides the structure to set a master server to do a netscan
+type ScanMaster struct {
+	Server Server
+	Params nsParams
+}
+
+// Instructions receives the JSON info that details instructions about how to modify the storage_config.json file
+type Instructions struct {
+	Instructions []Instruction
+}
+
+// Instruction receives the JSON info that details instructions about how to modify the storage_config.json file
+type Instruction struct {
+	FromStore  int
+	ToStore    int
+	FromPort   int
+	ToPort     int
+	TargetURLS []string
+	Store      changeStore
+}
+
+type changeStore struct {
+	Capacity string `json:"Capacity"`
+	Backend  string `json:"backend"`
+	BasePath string `json:"basePath"`
+	URL      string `json:"URL"`
+	Magic    string `json:"Magic"`
+	CertFile string `json:"CertFile"`
+	KeyFile  string `json:"KeyFile"`
+	Insecure string `json:"Insecure"`
+	Open     string `json:"Open"`
+	Run      string `json:"Run"`
+}
+
+// SetIMaster starts an Iperf listener on master server
+func (sm *ScanMaster) SetIMaster(port, scantime, location, name string, servers []Server) error {
+	var s Server
+
+	sm.Params = nsParams{
+		site:     location,
+		scantime: scantime,
+		port:     port,
+	}
+
+	err := errors.New("Server not found in configuration list")
+	for _, s = range servers {
+		if !inLocation(location, s) {
+			continue
+		}
+		if strings.ToLower(name) == strings.ToLower(s.Name) {
+			err = nil
+			goto End
+		}
+	}
+	return err
+End:
+	// fmt.Println("Master server set")
+	sm.Server = s
+	return nil
+}
+
+// StartMaster asfdas asdfasdf asdfasd
+func (sm *ScanMaster) StartMaster() error {
 	var rmtCmd string
 	var cmd *exec.Cmd
-	s, err := GetServer(cfg, name, location)
+	pFlag := "-p " + sm.Server.SSHPort
+	addr := sm.Server.User + "@" + sm.Server.VpnIP
+	// fmt.Println(pFlag)
+	// fmt.Println(addr)
+
+	fmt.Printf("Starting Iperf Master in %s (%s)\n", strings.Title(sm.Server.Name), sm.Server.LocalIP)
+
+	isHost, err := isHost(sm.Server)
 	if err != nil {
-		return func() {}, s, err
+		return err
 	}
 
-	pFlag := "-p " + s.Port
-	addr := s.User + "@" + s.VpnIP
-	fmt.Printf("Starting Iperf Master in %s (%s)\n", strings.Title(name), s.LocalIP)
-
-	isHost, err := cm.IsHost(s)
-	if err != nil {
-		return func() {}, s, err
-	}
-
+	iPort := sm.Params.port
 	if isHost {
-		rmtCmd = "iperf -s -p " + port
+		rmtCmd = "iperf -s -p " + iPort
+		fmt.Println(rmtCmd)
 		cmd = exec.Command(rmtCmd)
 	} else {
-		rmtCmd := ""
-		if s.Os == "macos" {
-			rmtCmd = "/usr/local/bin/iperf -s -p " + port
+		if sm.Server.Os == "macos" {
+			rmtCmd = "/usr/local/bin/iperf -s -p " + iPort
 
 		} else {
-			rmtCmd = "iperf -s -p " + port
+			rmtCmd = "iperf -s -p " + iPort
 		}
+		// fmt.Println(rmtCmd)
 		cmd = exec.Command("ssh", pFlag, addr, rmtCmd)
 	}
 
 	err = cmd.Start()
 	if err != nil {
-		return func() {}, s, err
+		return err
 	}
+	// fmt.Println("Command started")
 
 	time.Sleep(2 * time.Second)
 	cmd2 := exec.Command("ssh", pFlag, addr, "pgrep iperf")
-	temp, err := cmd2.Output()
+	rmtPid, err := cmd2.Output()
 	if err != nil {
-		return func() {}, s, err
+		return err
 	}
 
-	pid := string(temp)
+	pid := string(rmtPid)
+	sm.Params.pid = pid
 	fmt.Printf("Master started. PID: %s \n", pid)
-	return func() {
-		cmd := exec.Command("ssh", pFlag, addr, "sudo kill -9 "+pid)
-		err := cmd.Run()
-		if err != nil {
-			fmt.Printf("\nError while stopping master: %v", err)
-		}
-		fmt.Printf("Master stopped\n\n")
-	}, s, nil
+	return nil
 }
 
-// ScanServers receives a config variable and a "row" and scans through the servers given that they are not the master and are in the set location
-func ScanServers(mst st.Server, port, scantime, location string, cfg st.Config) []string {
-	row := []string{mst.Name}
-	for _, server := range cfg.Servers {
-		if mst.Name == server.Name {
+// StopMaster asfdasdf asdfasdf asdf asdf
+func (sm *ScanMaster) StopMaster() error {
+	pFlag := "-p " + sm.Server.SSHPort
+	addr := sm.Server.User + "@" + sm.Server.VpnIP
+
+	cmd := exec.Command("ssh", pFlag, addr, "sudo kill -9 "+sm.Params.pid)
+	err := cmd.Run()
+	if err != nil {
+		fmt.Printf("\nError while stopping master: %v", err)
+		return err
+	}
+	fmt.Printf("Master stopped\n\n")
+	return nil
+}
+
+// RunTest receives a config variable and a "row" and scans through the servers given that they are not the master and are in the set location
+func (sm *ScanMaster) RunTest(servers []Server) ([]string, error) {
+	row := []string{sm.Server.Name}
+	for _, server := range servers {
+		if sm.Server.Name == server.Name {
 			row = append(row, "-")
 			continue
 		}
-		if server.Location != location {
+		if server.Site != sm.Params.site {
 			continue
 		}
 
-		output, err := RunScan(server, mst, port, scantime)
+		output, err := sm.runScan(server)
 		if err != nil {
 			fmt.Printf("Error while running iperf server: %s", err)
+			return row, err
 		}
 		row = append(row, output)
 	}
-	return row
-
+	return row, nil
 }
 
 // RunScan takes a client server, master server, iperf port and scantime and runs a bidirectional net test
-func RunScan(s, m st.Server, p string, t string) (string, error) {
-	fmt.Printf("Running Iperf client on %s (%s) to %s (%s)\n", strings.Title(s.Name), s.LocalIP, strings.Title(m.Name), m.LocalIP)
+func (sm *ScanMaster) runScan(s Server) (string, error) {
+	fmt.Printf("Running Iperf client on %s (%s) to %s (%s)\n", strings.Title(s.Name), s.LocalIP, strings.Title(sm.Server.Name), sm.Server.LocalIP)
 	var cmd *exec.Cmd
 	var ret, rmtCmd string
-	pFlag := "-p " + s.Port
+	pFlag := "-p " + s.SSHPort
 	addr := s.User + "@" + s.VpnIP
 
-	isHost, err := cm.IsHost(s)
+	isHost, err := isHost(s)
 	if err != nil {
 		return "", err
 	}
 	if isHost {
-		rmtCmd = "iperf -c " + m.LocalIP + " -p " + p
+		rmtCmd = "iperf -c " + sm.Server.LocalIP + " -p " + sm.Params.port
 		cmd = exec.Command(rmtCmd)
 	} else {
 		if s.Os == "macos" {
-			rmtCmd = "/usr/local/bin/iperf -c " + m.LocalIP + " -p " + p
+			rmtCmd = "/usr/local/bin/iperf -c " + sm.Server.LocalIP + " -p " + sm.Params.port
 
 		} else {
-			rmtCmd = "iperf -c " + m.LocalIP + " -p " + p
+			rmtCmd = "iperf -c " + sm.Server.LocalIP + " -p " + sm.Params.port
 
 		}
 		cmd = exec.Command("ssh", pFlag, addr, rmtCmd)
 	}
-	// cmd.Stdout = os.Stdout
 	out, err := cmd.StdoutPipe()
 	if err != nil {
 		return ret, err
@@ -127,7 +221,17 @@ func RunScan(s, m st.Server, p string, t string) (string, error) {
 	}
 
 	scanner := bufio.NewScanner(out)
-	ret = readStuff(scanner)
+	for scanner.Scan() {
+		text := scanner.Text()
+		if strings.Contains(text, "Bytes") || strings.Contains(text, "bits") {
+			words := strings.Fields(text)
+			ret = words[6] + " " + words[7]
+		}
+	}
+	if err := scanner.Err(); err != nil {
+		fmt.Fprintln(os.Stderr, "reading standard input:", err)
+	}
+
 	cmd.Wait() // }
 
 	fmt.Printf("Output: %s\n", ret)
@@ -135,7 +239,7 @@ func RunScan(s, m st.Server, p string, t string) (string, error) {
 }
 
 // CreateHeader Takes the servers config and location and returns a header to append
-func CreateHeader(cfg st.Config, location string) []string {
+func CreateHeader(cfg ServerList, location string) []string {
 	var header = []string{""}
 	for _, server := range cfg.Servers {
 		if !inLocation(location, server) {
@@ -147,40 +251,40 @@ func CreateHeader(cfg st.Config, location string) []string {
 
 }
 
-// GetServer adfasdf asfda
-func GetServer(cfg st.Config, name, location string) (st.Server, error) {
-	var s st.Server
-	for _, server := range cfg.Servers {
-		if !inLocation(location, server) {
-			continue
-		}
-		if strings.ToLower(name) == strings.ToLower(server.Name) {
-			s = server
-			return s, nil
-		}
-	}
-	err := errors.New("Master server not found in configuration list")
-	return s, err
-}
-
-func readStuff(scanner *bufio.Scanner) string {
-	var ret string
-	for scanner.Scan() {
-		text := scanner.Text()
-		if strings.Contains(text, "Bytes") || strings.Contains(text, "bits") {
-			words := strings.Fields(text)
-			ret = words[6] + " " + words[7]
-		}
-	}
-	if err := scanner.Err(); err != nil {
-		fmt.Fprintln(os.Stderr, "reading standard input:", err)
-	}
-	return ret
-}
-
-func inLocation(l string, s st.Server) bool {
-	if strings.ToLower(l) == strings.ToLower(s.Location) {
+func inLocation(l string, s Server) bool {
+	if strings.ToLower(l) == strings.ToLower(s.Site) {
 		return true
 	}
 	return false
+}
+
+// isHost checks if the device running the application is part of the scanned
+func isHost(s Server) (bool, error) {
+	ifaces, err := net.Interfaces()
+	if err != nil {
+		return false, err
+	}
+	for _, i := range ifaces {
+		addrs, err := i.Addrs()
+		if err != nil {
+			return false, err
+		}
+		for _, addr := range addrs {
+			var ip net.IP
+			switch v := addr.(type) {
+			case *net.IPNet:
+				ip = v.IP
+			case *net.IPAddr:
+				ip = v.IP
+			}
+			if ip.String() == s.LocalIP {
+				// fmt.Printf("LocalIP match: %s vs %s.\n", ip, s.LocalIP)
+				return true, nil
+			} else if ip.String() == s.VpnIP {
+				// fmt.Printf("VpnIP match: %s vs %s.\n", ip, s.VpnIP)
+				return true, nil
+			}
+		}
+	}
+	return false, nil
 }

@@ -1,10 +1,6 @@
 package cmd
 
 import (
-	"fmt"
-
-	cm "github.com/clonerOpsTool/pkg/common"
-	mdfy "github.com/clonerOpsTool/pkg/modify"
 	"github.com/spf13/cobra"
 )
 
@@ -19,35 +15,34 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("extendStorage called")
-		config, err := cm.UploadStorageConf(stConf)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		// fmt.Println("extendStorage called")
+		// config, err := cm.UploadStorageConf(stConf)
+		// if err != nil {
+		// 	fmt.Println(err)
+		// 	return
+		// }
 
-		port, err := mdfy.GetLastPort(svName, config.Stores)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		// config.Stores, err = mdfy.ExtendStore(svName, stNum, toPoint, isMaster, config.Stores)
+		// if err != nil {
+		// 	fmt.Println(err)
+		// 	return
+		// }
 
-		fmt.Printf("Last port for %s is:%d\n", svName, port)
-
-		stores, err := mdfy.GetStoreCluster(svName, 11, config.Stores)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
-		point, err := mdfy.GetLastPoint(stores)
-		fmt.Printf("Last point for server %s, store 11 is:%d\n", svName, point)
-
+		// cm.WriteJSON(stConf, config)
 	},
 }
+
+// var stNum, toPoint int
+// var isMaster bool
 
 func init() {
 	configEditorCmd.AddCommand(extendStorageCmd)
 
-	extendStorageCmd.Flags().StringVarP(&svName, "server", "s", "", "FILL explanation")
-	extendStorageCmd.MarkFlagRequired("server")
+	// extendStorageCmd.Flags().StringVarP(&svName, "server", "s", "", "FILL explanation")
+	// extendStorageCmd.MarkFlagRequired("server")
+	// extendStorageCmd.Flags().IntVarP(&stNum, "store", "t", 0, "FILL explanation")
+	// extendStorageCmd.MarkFlagRequired("store")
+	// extendStorageCmd.Flags().IntVarP(&toPoint, "toPoint", "p", 0, "FILL explanation")
+	// extendStorageCmd.MarkFlagRequired("toPoint")
+	// extendStorageCmd.Flags().BoolVarP(&isMaster, "isMaster", "m", false, "FILL explanation")
 }

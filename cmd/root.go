@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	st "github.com/clonerOpsTool/pkg/structs"
+	ns "github.com/clonerOpsTool/pkg/netscan"
 	"github.com/spf13/cobra"
 
 	homedir "github.com/mitchellh/go-homedir"
@@ -12,7 +12,7 @@ import (
 )
 
 var cfgFile string
-var cfg st.Config
+var cfg ns.ServerList
 
 var rootCmd = &cobra.Command{
 	Use:   "clonerOpsTool",

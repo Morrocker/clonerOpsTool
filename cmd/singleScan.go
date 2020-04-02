@@ -1,11 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-
-	nt "github.com/clonerOpsTool/pkg/netscan"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // singleScanCmd represents the singleScan command
@@ -17,28 +13,28 @@ Un maestro que hace de servidor y un cliente que prueba el trafico. El resultado
 devuelto a traves de la terminal. No se escriben archivos de salida.`,
 	Run: func(cmd *cobra.Command, args []string) {
 
-		stopMaster, mst, err := nt.StartMaster(cfg, port, scantime, location, master)
-		if err != nil {
-			fmt.Println(err)
-			return
-		}
+		// 		stopMaster, mst, err := nt.StartMaster(cfg, port, scantime, location, master)
+		// 		if err != nil {
+		// 			fmt.Println(err)
+		// 			return
+		// 		}
 
-		server, err := nt.GetServer(cfg, client, location)
+		// 		server, err := nt.GetServer(cfg, client, location)
 
-		nt.RunScan(server, mst, port, scantime)
+		// 		nt.RunScan(server, mst, port, scantime)
 
-		stopMaster()
+		// 		stopMaster()
 	},
 }
 
 func init() {
-	netScanCmd.AddCommand(singleScanCmd)
+	netTestCmd.AddCommand(singleScanCmd)
 
-	singleScanCmd.PersistentFlags().StringVarP(&master, "master", "m", "", "Nombre del servidor maestro (requerido)")
-	viper.BindPFlag("master", singleScanCmd.PersistentFlags().Lookup("master"))
-	singleScanCmd.MarkPersistentFlagRequired("master")
+	// singleScanCmd.PersistentFlags().StringVarP(&master, "master", "m", "", "Nombre del servidor maestro (requerido)")
+	// viper.BindPFlag("master", singleScanCmd.PersistentFlags().Lookup("master"))
+	// singleScanCmd.MarkPersistentFlagRequired("master")
 
-	singleScanCmd.PersistentFlags().StringVarP(&client, "client", "c", "", "Nombre del cliente (requerido)")
-	viper.BindPFlag("client", singleScanCmd.PersistentFlags().Lookup("client"))
-	singleScanCmd.MarkPersistentFlagRequired("client")
+	// singleScanCmd.PersistentFlags().StringVarP(&client, "client", "c", "", "Nombre del cliente (requerido)")
+	// viper.BindPFlag("client", singleScanCmd.PersistentFlags().Lookup("client"))
+	// singleScanCmd.MarkPersistentFlagRequired("client")
 }

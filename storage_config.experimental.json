@@ -14657,6 +14657,678 @@
    "Insecure": false,
    "Open": true,
    "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point5"
+   },
+   "URL": "https://bravo.cloner.cl:4227",
+   "Magic": "bravo_s12_5",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point6"
+   },
+   "URL": "https://bravo.cloner.cl:4228",
+   "Magic": "bravo_s12_6",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point7"
+   },
+   "URL": "https://bravo.cloner.cl:4229",
+   "Magic": "bravo_s12_7",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point8"
+   },
+   "URL": "https://bravo.cloner.cl:4230",
+   "Magic": "bravo_s12_8",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point9"
+   },
+   "URL": "https://bravo.cloner.cl:4231",
+   "Magic": "bravo_s12_9",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point10"
+   },
+   "URL": "https://bravo.cloner.cl:4232",
+   "Magic": "bravo_s12_10",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point11"
+   },
+   "URL": "https://bravo.cloner.cl:4233",
+   "Magic": "bravo_s12_11",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point12"
+   },
+   "URL": "https://bravo.cloner.cl:4234",
+   "Magic": "bravo_s12_12",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point13"
+   },
+   "URL": "https://bravo.cloner.cl:4235",
+   "Magic": "bravo_s12_13",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point14"
+   },
+   "URL": "https://bravo.cloner.cl:4236",
+   "Magic": "bravo_s12_14",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point15"
+   },
+   "URL": "https://bravo.cloner.cl:4237",
+   "Magic": "bravo_s12_15",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage12/point16"
+   },
+   "URL": "https://bravo.cloner.cl:4238",
+   "Magic": "bravo_s12_16",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point5"
+   },
+   "URL": "https://bravo.cloner.cl:4239",
+   "Magic": "bravo_s13_5",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point6"
+   },
+   "URL": "https://bravo.cloner.cl:4240",
+   "Magic": "bravo_s13_6",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point7"
+   },
+   "URL": "https://bravo.cloner.cl:4241",
+   "Magic": "bravo_s13_7",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point8"
+   },
+   "URL": "https://bravo.cloner.cl:4242",
+   "Magic": "bravo_s13_8",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point9"
+   },
+   "URL": "https://bravo.cloner.cl:4243",
+   "Magic": "bravo_s13_9",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point10"
+   },
+   "URL": "https://bravo.cloner.cl:4244",
+   "Magic": "bravo_s13_10",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point11"
+   },
+   "URL": "https://bravo.cloner.cl:4245",
+   "Magic": "bravo_s13_11",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point12"
+   },
+   "URL": "https://bravo.cloner.cl:4246",
+   "Magic": "bravo_s13_12",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point13"
+   },
+   "URL": "https://bravo.cloner.cl:4247",
+   "Magic": "bravo_s13_13",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point14"
+   },
+   "URL": "https://bravo.cloner.cl:4248",
+   "Magic": "bravo_s13_14",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point15"
+   },
+   "URL": "https://bravo.cloner.cl:4249",
+   "Magic": "bravo_s13_15",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage13/point16"
+   },
+   "URL": "https://bravo.cloner.cl:4250",
+   "Magic": "bravo_s13_16",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point5"
+   },
+   "URL": "https://bravo.cloner.cl:4251",
+   "Magic": "bravo_s2_5",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point6"
+   },
+   "URL": "https://bravo.cloner.cl:4252",
+   "Magic": "bravo_s2_6",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point7"
+   },
+   "URL": "https://bravo.cloner.cl:4253",
+   "Magic": "bravo_s2_7",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point8"
+   },
+   "URL": "https://bravo.cloner.cl:4254",
+   "Magic": "bravo_s2_8",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point9"
+   },
+   "URL": "https://bravo.cloner.cl:4255",
+   "Magic": "bravo_s2_9",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point10"
+   },
+   "URL": "https://bravo.cloner.cl:4256",
+   "Magic": "bravo_s2_10",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point11"
+   },
+   "URL": "https://bravo.cloner.cl:4257",
+   "Magic": "bravo_s2_11",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point12"
+   },
+   "URL": "https://bravo.cloner.cl:4258",
+   "Magic": "bravo_s2_12",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point13"
+   },
+   "URL": "https://bravo.cloner.cl:4259",
+   "Magic": "bravo_s2_13",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point14"
+   },
+   "URL": "https://bravo.cloner.cl:4260",
+   "Magic": "bravo_s2_14",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point15"
+   },
+   "URL": "https://bravo.cloner.cl:4261",
+   "Magic": "bravo_s2_15",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage2/point16"
+   },
+   "URL": "https://bravo.cloner.cl:4262",
+   "Magic": "bravo_s2_16",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point5"
+   },
+   "URL": "https://bravo.cloner.cl:4263",
+   "Magic": "bravo_s3_5",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": false,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point6"
+   },
+   "URL": "https://bravo.cloner.cl:4264",
+   "Magic": "bravo_s3_6",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": false,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point7"
+   },
+   "URL": "https://bravo.cloner.cl:4265",
+   "Magic": "bravo_s3_7",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": false,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point8"
+   },
+   "URL": "https://bravo.cloner.cl:4266",
+   "Magic": "bravo_s3_8",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": false,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point9"
+   },
+   "URL": "https://bravo.cloner.cl:4267",
+   "Magic": "bravo_s3_9",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point10"
+   },
+   "URL": "https://bravo.cloner.cl:4268",
+   "Magic": "bravo_s3_10",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point11"
+   },
+   "URL": "https://bravo.cloner.cl:4269",
+   "Magic": "bravo_s3_11",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point12"
+   },
+   "URL": "https://bravo.cloner.cl:4270",
+   "Magic": "bravo_s3_12",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point13"
+   },
+   "URL": "https://bravo.cloner.cl:4271",
+   "Magic": "bravo_s3_13",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point14"
+   },
+   "URL": "https://bravo.cloner.cl:4272",
+   "Magic": "bravo_s3_14",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point15"
+   },
+   "URL": "https://bravo.cloner.cl:4273",
+   "Magic": "bravo_s3_15",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
+    "basePath": "/storage3/point16"
+   },
+   "URL": "https://bravo.cloner.cl:4274",
+   "Magic": "bravo_s3_16",
+   "CertFile": "/etc/letsencrypt/live/bravo.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/bravo.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": true,
+   "Run": false
   }
  ],
  "Backups": [],

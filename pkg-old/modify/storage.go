@@ -3,13 +3,12 @@ package modify
 import (
 	"errors"
 	"fmt"
-	"net/url"
 	"reflect"
-	"regexp"
 	"strconv"
 	"strings"
 
 	st "github.com/clonerOpsTool/pkg/structs"
+	"github.com/davecgh/go-spew/spew"
 )
 
 type storedata struct {
@@ -27,7 +26,7 @@ func ExecInstr(stores []st.Store, its st.Instructions) ([]st.Store, error) {
 		// fmt.Printf("Executing instruction #%v. Params: Port:%d/%d, Store: %d/%d, Target:%v\n", z, it.FromPort, it.ToPort, it.FromStore, it.ToStore, it.TargetURLS)
 		for i, store := range stores {
 			// fmt.Printf("checking store: %s\n", store.URL)
-			params, err := getStoreParams(store)
+			params, err := getStoreData(store)
 			if err != nil {
 				return Stores, err
 			}
@@ -123,44 +122,44 @@ func ExecInstr(stores []st.Store, its st.Instructions) ([]st.Store, error) {
 	return stores, nil
 }
 
-func getStoreParams(store st.Store) (storedata, error) {
-	basepath := store.Options.BasePath
-	URL := store.URL
-	var data storedata
-	// fmt.Println(basepath)
+// func getStoreData(store st.Store) (storedata, error) {
+// 	basepath := store.Options.BasePath
+// 	URL := store.URL
+// 	var data storedata
+// 	// fmt.Println(basepath)
 
-	numbers := getNumbers(basepath)
-	if len(numbers) <= 1 {
-		err := errors.New("Couldn't detect store and point numbers from basepath:" + basepath)
-		return data, err
-	}
-	storeInt, err := strconv.Atoi(numbers[0])
-	if err != nil {
-		return data, err
-	}
-	pointInt, err := strconv.Atoi(numbers[1])
-	if err != nil {
-		return data, err
-	}
-	data.storeNum = storeInt
-	data.pointNum = pointInt
+// 	numbers := getNumbers(basepath)
+// 	if len(numbers) <= 1 {
+// 		err := errors.New("Couldn't detect store and point numbers from basepath:" + basepath)
+// 		return data, err
+// 	}
+// 	storeInt, err := strconv.Atoi(numbers[0])
+// 	if err != nil {
+// 		return data, err
+// 	}
+// 	pointInt, err := strconv.Atoi(numbers[1])
+// 	if err != nil {
+// 		return data, err
+// 	}
+// 	data.storeNum = storeInt
+// 	data.pointNum = pointInt
 
-	fullURL, err := url.Parse(URL)
-	data.dns = fullURL.Hostname()
-	port, err := strconv.Atoi(fullURL.Port())
-	if err != nil {
-		return data, err
-	}
-	data.port = port
+// 	fullURL, err := url.Parse(URL)
+// 	data.dns = fullURL.Hostname()
+// 	port, err := strconv.Atoi(fullURL.Port())
+// 	if err != nil {
+// 		return data, err
+// 	}
+// 	data.port = port
 
-	return data, nil
-}
+// 	return data, nil
+// }
 
-func getNumbers(str string) []string {
-	re := regexp.MustCompile(`\d[\d]*`)
-	submatchall := re.FindAllString(str, -1)
-	return submatchall
-}
+// func getNumbers(str string) []string {
+// 	re := regexp.MustCompile(`\d[\d]*`)
+// 	submatchall := re.FindAllString(str, -1)
+// 	return submatchall
+// }
 
 // GetLastPort asdfas sadfasfas asdfasfd
 func GetLastPort(name string, stores []st.Store) (int, error) {
@@ -169,7 +168,7 @@ func GetLastPort(name string, stores []st.Store) (int, error) {
 		if !strings.Contains(store.URL, name) {
 			continue
 		}
-		stData, err := getStoreParams(store)
+		stData, err := getStoreData(store)
 		if err != nil {
 			return 0, err
 		}
@@ -194,7 +193,7 @@ func GetStoreCluster(svName string, stNum int, stores []st.Store) ([]st.Store, e
 		if !strings.Contains(store.URL, svName) {
 			continue
 		}
-		stData, err := getStoreParams(store)
+		stData, err := getStoreData(store)
 		if err != nil {
 			return stFound, err
 		}
@@ -209,7 +208,7 @@ func GetStoreCluster(svName string, stNum int, stores []st.Store) ([]st.Store, e
 func GetLastPoint(stores []st.Store) (int, error) {
 	var lastPoint int
 	for _, store := range stores {
-		stData, err := getStoreParams(store)
+		stData, err := getStoreData(store)
 		if err != nil {
 			return 0, err
 		}
@@ -224,4 +223,71 @@ func GetLastPoint(stores []st.Store) (int, error) {
 		}
 	}
 	return lastPoint, nil
+}
+
+// ExtendStore asfdas asfdasdf sadf asdf
+func ExtendStore(svName string, stNum, toPoint int, master bool, stores []st.Store) ([]st.Store, error) {
+	newStores := stores
+	lastPort, err := GetLastPort(svName, stores)
+	if err != nil {
+		return newStores, err
+	} else if lastPort == 0 {
+		err := errors.New("No last port found, check if parameters are correct")
+		return newStores, err
+	}
+	cluster, err := GetStoreCluster(svName, stNum, stores)
+	if err != nil {
+		return newStores, err
+	} else if cluster == nil {
+		err := errors.New("No store cluster found found, check if parameters are correct")
+		return newStores, err
+	}
+	lastPoint, err := GetLastPoint(cluster)
+	if err != nil {
+		return newStores, err
+	}
+
+	for lastPoint < toPoint {
+		lastPoint++
+		lastPort++
+		port := strconv.Itoa(lastPort)
+		store := strconv.Itoa(stNum)
+		point := strconv.Itoa(lastPoint)
+		var newStore = st.Store{
+			Capacity: 960000000000,
+			URL:      "https://" + svName + ".cloner.cl:" + port,
+			Magic:    svName + "_s" + store + "_" + point,
+			CertFile: "/etc/letsencrypt/live/" + svName + ".cloner.cl/fullchain.pem",
+			KeyFile:  "/etc/letsencrypt/live/" + svName + ".cloner.cl/privkey.pem",
+			Insecure: false,
+			Open:     true,
+			Run:      master,
+		}
+
+		newStore.Options.BasePath = "/storage" + store + "/point" + point
+		newStore.Options.Backend = "disk"
+
+		newStores = append(newStores, newStore)
+
+	}
+	return newStores, nil
+}
+
+// SortStores asdfa asf asfdlkas fdlkjsdf
+func SortStores(stores []st.Store) ([]st.Store, error) {
+	var storesData []storedata
+	for _, store := range stores {
+		stData, err := getStoreData(store)
+		if err != nil {
+			return stores, err
+		}
+		storesData = append(storesData, stData)
+	}
+	spew.Dump(storesData)
+	return stores, nil
+
+}
+
+func getDistinctDNS() {
+
 }

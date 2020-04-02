@@ -19,9 +19,7 @@ limitations under the License.
 import (
 	"fmt"
 
-	cm "github.com/clonerOpsTool/pkg/common"
 	"github.com/spf13/cobra"
-	"github.com/spf13/viper"
 )
 
 // testCmdCmd represents the testCmd command
@@ -36,16 +34,16 @@ This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("testCmd called")
-		// callDf()
-		// write()
-		for _, server := range cfg.Servers {
-			isHost, _ := cm.IsHost(server)
-			if isHost {
-				fmt.Printf("%s is the host.\n", server.Name)
-			} else {
-				fmt.Printf("%s is not the host.\n", server.Name)
-			}
-		}
+		// // callDf()
+		// // write()
+		// for _, server := range cfg.Servers {
+		// 	isHost, _ := cm.IsHost(server)
+		// 	if isHost {
+		// 		fmt.Printf("%s is the host.\n", server.Name)
+		// 	} else {
+		// 		fmt.Printf("%s is not the host.\n", server.Name)
+		// 	}
+		// }
 	},
 }
 
@@ -79,8 +77,8 @@ func init() {
 	// is called directly, e.g.:
 	// testCmdCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 	// viper.BindPFlag("toggle", rootCmd.Flags().Lookup("toggle"))
-	testCmdCmd.Flags().StringVar(&author, "author", "YOUR NAME", "Author name for copyright attribution")
-	viper.BindPFlag("author", testCmdCmd.Flags().Lookup("author"))
+	// testCmdCmd.Flags().StringVar(&author, "author", "YOUR NAME", "Author name for copyright attribution")
+	// viper.BindPFlag("author", testCmdCmd.Flags().Lookup("author"))
 }
 
 // func write() {
