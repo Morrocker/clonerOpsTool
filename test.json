@@ -158,6 +158,20 @@
    "Capacity": 960000000000,
    "Options": {
     "backend": "disk",
+    "basePath": "/storage7/point4"
+   },
+   "URL": "https://alpha.cloner.cl:4298",
+   "Magic": "alpha_s7_3",
+   "CertFile": "/etc/letsencrypt/live/alpha.cloner.cl/fullchain.pem",
+   "KeyFile": "/etc/letsencrypt/live/alpha.cloner.cl/privkey.pem",
+   "Insecure": false,
+   "Open": false,
+   "Run": true
+  },
+  {
+   "Capacity": 960000000000,
+   "Options": {
+    "backend": "disk",
     "basePath": "/storage8/point1"
    },
    "URL": "https://alpha.cloner.cl:4028",
@@ -984,10 +998,10 @@
    "Capacity": 960000000000,
    "Options": {
     "backend": "disk",
-    "basePath": "/storage24/point3"
+    "basePath": "/storage23/point4"
    },
-   "URL": "https://alpha.cloner.cl:4091",
-   "Magic": "alpha_s23_4",
+   "URL": "https://alpha.cloner.cl:4299",
+   "Magic": "alpha_s23_3",
    "CertFile": "/etc/letsencrypt/live/alpha.cloner.cl/fullchain.pem",
    "KeyFile": "/etc/letsencrypt/live/alpha.cloner.cl/privkey.pem",
    "Insecure": false,

@@ -43,34 +43,6 @@ type ScanMaster struct {
 	Params nsParams
 }
 
-// Instructions receives the JSON info that details instructions about how to modify the storage_config.json file
-type Instructions struct {
-	Instructions []Instruction
-}
-
-// Instruction receives the JSON info that details instructions about how to modify the storage_config.json file
-type Instruction struct {
-	FromStore  int
-	ToStore    int
-	FromPort   int
-	ToPort     int
-	TargetURLS []string
-	Store      changeStore
-}
-
-type changeStore struct {
-	Capacity string `json:"Capacity"`
-	Backend  string `json:"backend"`
-	BasePath string `json:"basePath"`
-	URL      string `json:"URL"`
-	Magic    string `json:"Magic"`
-	CertFile string `json:"CertFile"`
-	KeyFile  string `json:"KeyFile"`
-	Insecure string `json:"Insecure"`
-	Open     string `json:"Open"`
-	Run      string `json:"Run"`
-}
-
 // SetIMaster starts an Iperf listener on master server
 func (sm *ScanMaster) SetIMaster(port, scantime, location, name string, servers []Server) error {
 	var s Server
@@ -199,14 +171,14 @@ func (sm *ScanMaster) runScan(s Server) (string, error) {
 		return "", err
 	}
 	if isHost {
-		rmtCmd = "iperf -c " + sm.Server.LocalIP + " -p " + sm.Params.port
+		rmtCmd = "iperf -c " + sm.Server.LocalIP + " -p " + sm.Params.port + " -t " + sm.Params.scantime
 		cmd = exec.Command(rmtCmd)
 	} else {
 		if s.Os == "macos" {
-			rmtCmd = "/usr/local/bin/iperf -c " + sm.Server.LocalIP + " -p " + sm.Params.port
+			rmtCmd = "/usr/local/bin/iperf -c " + sm.Server.LocalIP + " -p " + sm.Params.port + " -t " + sm.Params.scantime
 
 		} else {
-			rmtCmd = "iperf -c " + sm.Server.LocalIP + " -p " + sm.Params.port
+			rmtCmd = "iperf -c " + sm.Server.LocalIP + " -p " + sm.Params.port + " -t " + sm.Params.scantime
 
 		}
 		cmd = exec.Command("ssh", pFlag, addr, rmtCmd)

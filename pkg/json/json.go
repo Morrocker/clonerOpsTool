@@ -5,29 +5,29 @@ import (
 	"fmt"
 	"io/ioutil"
 
-	st "github.com/clonerOpsTool/pkg/structs"
+	ed "github.com/clonerOpsTool/pkg/confeditor"
 )
 
 // UploadStorageConf asdfasf asdfa sdf
-func UploadStorageConf(filepath string) (st.StorageConfig, error) {
-	var data st.StorageConfig
+func UploadStorageConf(filepath string) (ed.StorageConfig, error) {
+	var sc ed.StorageConfig
 	file, err := ioutil.ReadFile(filepath)
 	if err != nil {
-		return data, err
+		return sc, err
 	}
 
-	err = json.Unmarshal([]byte(file), &data)
+	err = json.Unmarshal([]byte(file), &sc)
 	if err != nil {
-		return data, err
+		return sc, err
 	}
 	// spew.Dump(data)
-	return data, nil
+	return sc, nil
 
 }
 
 // UploadInstructions asdfa asdfas
-func UploadInstructions(filepath string) (st.Instructions, error) {
-	var data st.Instructions
+func UploadInstructions(filepath string) (ed.Instructions, error) {
+	var data ed.Instructions
 	file, err := ioutil.ReadFile(filepath)
 	if err != nil {
 		return data, err
@@ -43,7 +43,7 @@ func UploadInstructions(filepath string) (st.Instructions, error) {
 }
 
 // WriteJSON asasdfadf asfdasdf asdf asdfsdfsafd
-func WriteJSON(name string, data st.StorageConfig) error {
+func WriteJSON(name string, data ed.StorageConfig) error {
 	file, err := json.MarshalIndent(data, "", " ")
 	if err != nil {
 		return err

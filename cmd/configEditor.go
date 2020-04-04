@@ -1,7 +1,11 @@
 package cmd
 
 import (
+	"fmt"
+
 	"github.com/spf13/cobra"
+
+	json "github.com/clonerOpsTool/pkg/json"
 )
 
 // configEditorCmd represents the configEditor command
@@ -17,6 +21,16 @@ La herramienta permite cierta granularidad en los cambios a realizar pudiendo re
 los storagepoints cuyos parametros son afectados.`,
 	Run: func(cmd *cobra.Command, args []string) {
 		// fmt.Println("configEditor called")
+		config, _ := json.UploadStorageConf(stConf)
+		config.GetStoresData()
+		config.SortStores()
+		// port, _ := config.GetLastPort("alpha")
+		err := config.AddStore("alpha", 35, 5, 0, true)
+		fmt.Println(err)
+		// config.Check()
+
+		// spew.Dump(config)
+
 	},
 }
 

@@ -122,69 +122,6 @@ func ExecInstr(stores []st.Store, its st.Instructions) ([]st.Store, error) {
 	return stores, nil
 }
 
-// func getStoreData(store st.Store) (storedata, error) {
-// 	basepath := store.Options.BasePath
-// 	URL := store.URL
-// 	var data storedata
-// 	// fmt.Println(basepath)
-
-// 	numbers := getNumbers(basepath)
-// 	if len(numbers) <= 1 {
-// 		err := errors.New("Couldn't detect store and point numbers from basepath:" + basepath)
-// 		return data, err
-// 	}
-// 	storeInt, err := strconv.Atoi(numbers[0])
-// 	if err != nil {
-// 		return data, err
-// 	}
-// 	pointInt, err := strconv.Atoi(numbers[1])
-// 	if err != nil {
-// 		return data, err
-// 	}
-// 	data.storeNum = storeInt
-// 	data.pointNum = pointInt
-
-// 	fullURL, err := url.Parse(URL)
-// 	data.dns = fullURL.Hostname()
-// 	port, err := strconv.Atoi(fullURL.Port())
-// 	if err != nil {
-// 		return data, err
-// 	}
-// 	data.port = port
-
-// 	return data, nil
-// }
-
-// func getNumbers(str string) []string {
-// 	re := regexp.MustCompile(`\d[\d]*`)
-// 	submatchall := re.FindAllString(str, -1)
-// 	return submatchall
-// }
-
-// GetLastPort asdfas sadfasfas asdfasfd
-func GetLastPort(name string, stores []st.Store) (int, error) {
-	lastPort := 0
-	for _, store := range stores {
-		if !strings.Contains(store.URL, name) {
-			continue
-		}
-		stData, err := getStoreData(store)
-		if err != nil {
-			return 0, err
-		}
-		if lastPort < stData.port {
-			lastPort = stData.port
-			continue
-		} else if lastPort == stData.port {
-
-			fmt.Printf("Port %d duplicated in config. Check manually to fix inconsistency or possible error", lastPort)
-			err := errors.New("Port duplicated in config. Check manually to fix inconsistency or possible error")
-			return 0, err
-		}
-	}
-	return lastPort, nil
-}
-
 // GetStoreCluster asfdas asdfadfa sdf a
 func GetStoreCluster(svName string, stNum int, stores []st.Store) ([]st.Store, error) {
 	var stFound []st.Store
@@ -202,27 +139,6 @@ func GetStoreCluster(svName string, stNum int, stores []st.Store) ([]st.Store, e
 		}
 	}
 	return stFound, nil
-}
-
-// GetLastPoint asdfklj alsdfka lfdk alskdfja
-func GetLastPoint(stores []st.Store) (int, error) {
-	var lastPoint int
-	for _, store := range stores {
-		stData, err := getStoreData(store)
-		if err != nil {
-			return 0, err
-		}
-		if lastPoint < stData.pointNum {
-			lastPoint = stData.pointNum
-			continue
-		} else if lastPoint == stData.pointNum {
-
-			fmt.Printf("Point %d duplicated in config %v.\n Check manually to fix inconsistency or possible error", lastPoint, store)
-			err := errors.New("point duplicated in config. Check manually to fix inconsistency or possible error")
-			return 0, err
-		}
-	}
-	return lastPoint, nil
 }
 
 // ExtendStore asfdas asfdasdf sadf asdf
