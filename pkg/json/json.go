@@ -43,7 +43,7 @@ func UploadInstructions(filepath string) (ed.Instructions, error) {
 }
 
 // WriteJSON asasdfadf asfdasdf asdf asdfsdfsafd
-func WriteJSON(name string, data ed.StorageConfig) error {
+func WriteJSON(name string, data interface{}) error {
 	file, err := json.MarshalIndent(data, "", " ")
 	if err != nil {
 		return err

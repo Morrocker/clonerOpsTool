@@ -1,24 +1,29 @@
 package confeditor
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/url"
+	"reflect"
 	"regexp"
 	"strconv"
 	"strings"
+
+	"github.com/davecgh/go-spew/spew"
 )
 
 // StorageConfig provides the structure to contain a blockmaster storage configuration
 type StorageConfig struct {
-	Stores  []Store
-	Backups []backup
-	Master  master `json:"Master"`
+	Stores  []Store     `json:"Stores"`
+	Backups []Backup    `json:"Backups"`
+	Master  interface{} `json:"Master"`
 }
 
 // Store asfdasfd
 type Store struct {
-	Capacity int64  `json:"Capacity"`
+	Capacity int    `json:"Capacity"`
 	Options  option `json:"Options"`
 	URL      string `json:"URL"`
 	Magic    string `json:"Magic"`
@@ -42,9 +47,10 @@ type master struct {
 	Insecure         bool   `json:"Insecure"`
 }
 
-type backup struct {
-	URL   string
-	Magic string
+// Backup asdfas
+type Backup struct {
+	URL   string `json:"URL"`
+	Magic string `json:"Magic"`
 }
 
 type option struct {
@@ -58,6 +64,39 @@ type IDData struct {
 	PointNum int
 	dns      string
 	port     int
+}
+
+// Load asdf aasdf asdf
+func (c *StorageConfig) Load(st string) error {
+	f, err := ioutil.ReadFile(st)
+	if err != nil {
+		return err
+	}
+
+	err = json.Unmarshal([]byte(f), c)
+	if err != nil {
+		return err
+	}
+	// spew.Dump(data)
+
+	c.GetStoresData()
+	c.SortStores()
+	return nil
+}
+
+// Write asdf adf asdf
+func (c *StorageConfig) Write(name string) error {
+	file, err := json.MarshalIndent(c, "", " ")
+	if err != nil {
+		return err
+	}
+	err = ioutil.WriteFile(name, file, 0644)
+	if err != nil {
+		return err
+
+	}
+	fmt.Printf("JSON data writen to file %s\n", name)
+	return nil
 }
 
 // GetStoresData asdfsa asdf asdf
@@ -101,7 +140,6 @@ func (s *Store) getData() error {
 	}
 	data.port = port
 
-	// spew.Dump(data)
 	s.Data = data
 	return nil
 }
@@ -151,7 +189,6 @@ func (c *StorageConfig) SortStores() {
 				sortedStores = append(sortedStores, s)
 			} else {
 				for i, sorted := range sortedStores {
-					// ln := len(sortedStores) + 1
 					var temp []Store
 					if s.Data.StoreNum < sorted.Data.StoreNum {
 						temp = append(temp, sortedStores[0:i]...)
@@ -169,16 +206,12 @@ func (c *StorageConfig) SortStores() {
 						sortedStores = append(sortedStores, s)
 						break
 					}
-
 				}
 			}
 		}
 		FinalStores = append(FinalStores, sortedStores...)
 	}
 	c.Stores = FinalStores
-	// for _, s := range c.Stores {
-	// 	fmt.Printf("Store: %s#%d,%d\n", s.Data.dns, s.Data.StoreNum, s.Data.PointNum)
-	// }
 }
 
 // GetLastPoint asdfklj alsdfka lfdk alskdfja
@@ -194,7 +227,8 @@ func (c *StorageConfig) GetLastPoint(svName string, storeNum int) (int, error) {
 			continue
 		} else if lastPoint == s.Data.PointNum {
 
-			fmt.Printf("Point %d duplicated in config %v.\n Check manually to fix inconsistency or possible error", lastPoint, s)
+			fmt.Printf("Point %d duplicated in config\n", lastPoint)
+			spew.Dump(s)
 			err := errors.New("point duplicated in config. Check manually to fix inconsistency or possible error")
 			return 0, err
 		}
@@ -203,11 +237,28 @@ func (c *StorageConfig) GetLastPoint(svName string, storeNum int) (int, error) {
 }
 
 // GenerateSlave adsfa asdf asdf asdf
-func (c *StorageConfig) GenerateSlave() {
+func (c *StorageConfig) GenerateSlave(svName string) StorageConfig {
+	var Bkps = make([]Backup, 0)
+	var SlaveConf = StorageConfig{
+		Backups: Bkps,
+		Master:  nil,
+	}
+	// var SlaveStores []Stores
+	for _, store := range c.Stores {
+		if !strings.Contains(store.Data.dns, svName) {
+			continue
+		}
+		store.Run = true
+		store.CertFile = "/etc/letsencrypt/live/" + svName + ".cloner.cl/fullchain.pem"
+		store.KeyFile = "/etc/letsencrypt/live/" + svName + ".cloner.cl/privkey.pem"
+		SlaveConf.Stores = append(SlaveConf.Stores, store)
+	}
+	return SlaveConf
 }
 
 // ExtendStore lkjfda lkasjd asdf lkj
 func (c *StorageConfig) ExtendStore(svName string, stNum, toPoint int, master bool) error {
+	fmt.Printf("Extending store %d\n", stNum)
 	lastPoint, err := c.GetLastPoint(svName, stNum)
 	if err != nil {
 		return err
@@ -215,18 +266,17 @@ func (c *StorageConfig) ExtendStore(svName string, stNum, toPoint int, master bo
 		err := errors.New("No last point found, check if parameters are correct")
 		return err
 	}
-	err = c.AddStore(svName, stNum, lastPoint, toPoint, master)
+	err = c.AddStore(svName, stNum, lastPoint+1, toPoint, master)
 	if err != nil {
 		return err
 	}
 	return nil
-
 }
 
 // AddStore lkjsdf lkajslkdf asd klj
 func (c *StorageConfig) AddStore(svName string, stNum, fromPoint, toPoint int, master bool) error {
 
-	fmt.Printf("Creating new store %s#%d from %d to %d in with master %v\n", svName, stNum, fromPoint, toPoint, master)
+	fmt.Printf("Creating store %d on %s from point %d to %d with master set to %v\n", stNum, svName, fromPoint, toPoint, master)
 
 	bkpStores := c.Stores
 	var newStores []Store
@@ -240,20 +290,19 @@ func (c *StorageConfig) AddStore(svName string, stNum, fromPoint, toPoint int, m
 		return err
 	}
 
-	if fromPoint >= toPoint {
-		err := errors.New("Start point (" + strconv.Itoa(point) + ") is larger or equal to finish point (" + strconv.Itoa(toPoint) + "). Cancelling operation")
+	if fromPoint > toPoint {
+		err := errors.New("Start point (" + strconv.Itoa(point) + ") is larger than finish point (" + strconv.Itoa(toPoint) + "). Cancelling operation")
 		return err
 	}
 
-	for point < toPoint {
-		point++
+	for point <= toPoint {
 		lastPort++
 		port := strconv.Itoa(lastPort)
-		point := strconv.Itoa(point)
+		sPoint := strconv.Itoa(point)
 		var newStore = Store{
 			Capacity: 960000000000,
 			URL:      "https://" + svName + ".cloner.cl:" + port,
-			Magic:    svName + "_s" + store + "_" + point,
+			Magic:    svName + "_s" + store + "_" + sPoint,
 			CertFile: "/etc/letsencrypt/live/" + svName + ".cloner.cl/fullchain.pem",
 			KeyFile:  "/etc/letsencrypt/live/" + svName + ".cloner.cl/privkey.pem",
 			Insecure: false,
@@ -261,22 +310,23 @@ func (c *StorageConfig) AddStore(svName string, stNum, fromPoint, toPoint int, m
 			Run:      master,
 		}
 
-		newStore.Options.BasePath = "/storage" + store + "/point" + point
+		newStore.Options.BasePath = "/storage" + store + "/point" + sPoint
 		newStore.Options.Backend = "disk"
 
 		newStores = append(newStores, newStore)
+		point++
 
 	}
 	c.Stores = append(c.Stores, newStores...)
 	c.GetStoresData()
 	c.SortStores()
+	// spew.Dump(c.Stores)
 	issues := c.Check()
 	if issues {
 		err := errors.New("Errors found in resulting stores. Doing rollback")
 		c.Stores = bkpStores
 		return err
 	}
-	// spew.Dump(newStores)
 	return nil
 }
 
@@ -331,4 +381,91 @@ func (c *StorageConfig) Check() bool {
 		update()
 	}
 	return err
+}
+
+// ModifyStore akjdsf lskdfa jfdlka jfdl
+func (s *Store) ModifyStore(c changeStore) error {
+	fmt.Printf("Modifying store %d, point %d according to instruction\n", s.Data.StoreNum, s.Data.PointNum)
+	r := reflect.ValueOf(&c).Elem()
+	for x := 0; x < r.NumField(); x++ {
+		key := strings.ToLower(r.Type().Field(x).Name)
+		val := r.Field(x).Interface()
+		if val == nil {
+			continue
+		}
+		switch v := val.(type) {
+		case string:
+			switch key {
+			case "backend":
+				s.Options.Backend = v
+			case "basepath":
+				s.Options.BasePath = v
+			case "url":
+				s.URL = v
+			case "magic":
+				s.Magic = v
+			case "certfile":
+				s.CertFile = v
+			case "keyfile":
+				s.KeyFile = v
+			default:
+				fmt.Printf("given key ( %v / type %v ) does not match any know storage key", key, v)
+			}
+		case int:
+			switch key {
+			case "capacity":
+				s.Capacity = v
+			default:
+				fmt.Printf("given key ( %v  / type %v ) does not match any know storage key", key, v)
+			}
+		case float64:
+			var value int = int(v)
+			switch key {
+			case "capacity":
+				s.Capacity = value
+			default:
+				fmt.Printf("given key ( %v  / type %v ) does not match any know storage key", key, v)
+			}
+
+		case bool:
+			switch key {
+			case "insecure":
+				s.Insecure = v
+			case "open":
+				s.Open = v
+			case "run":
+				s.Run = v
+			default:
+				fmt.Printf("given key ( %v  / type %v ) does not match any know storage key", key, v)
+			}
+		default:
+			fmt.Println("Given key does not match any known storage key. Cancelling Operation")
+			err := errors.New("Given type doesn't exist the storage config")
+			if err != nil {
+				return err
+			}
+		}
+	}
+	return nil
+}
+
+// GetStore asdf adaf sadlkf aldkf
+func (c *StorageConfig) GetStore(svName string, stNum, ptNum int) (*Store, error) {
+	// spew.Dump(c)
+	fmt.Printf("Searching for store %d point %d on server %s\n", stNum, ptNum, svName)
+	for i, store := range c.Stores {
+		if !strings.Contains(store.Data.dns, svName) {
+			continue
+		}
+		if store.Data.StoreNum != stNum {
+			continue
+		}
+		if store.Data.PointNum != ptNum {
+			continue
+		}
+		return &c.Stores[i], nil
+	}
+	err := errors.New("Didn't find store")
+
+	return nil, err
 }

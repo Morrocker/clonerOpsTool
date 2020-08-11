@@ -2,42 +2,35 @@
 
   "Instructions":[
     {
+      "Type":"change",
       "fromStore":5,
       "toStore":30,
-      "fromPort":4100,
-      "toPort":4150,
-      "targetURLS":["alpha","bravo"],
-      "Store":{
-        "Capacity": "30",
-        "backend": "bar",
-        "basePath": "/storage500/point50",
-        "URL": "point",
-        "Magic": "cloner",
-        "CertFile": "key.pem",
-        "KeyFile": "cert.pem",
-        "Insecure": "true",
-        "Open": "true",
-        "Run": "true"
+      "fromPoint":0,
+      "toPoint":4,
+      "URL":"alpha",
+      "Master":true, 
+      "ChangedParams":{
+        "Capacity": 30,
+        "backend": "bar"
       }
     },
     {
-      "fromStore":15,
-      "toStore":20,
-      "fromPort":4000,
-      "toPort":0,
-      "targetURLS":["alpha","bravo"],
-      "Store":{
-        "Capacity": "1000",
-        "backend": "bar",
-        "basePath": "/storage500/point60",
-        "URL": "urlcool",
-        "Magic": "supermagic",
-        "CertFile": "cert.pem",
-        "KeyFile": "key.pem",
-        "Insecure": "false",
-        "Open": "true",
-        "Run": "false"
-      }
+      "Type":"add",
+      "fromStore":48,
+      "toStore":50,
+      "fromPoint":0,
+      "toPoint":4,
+      "Master":true, 
+      "URL":"alpha"
+    },
+    {
+      "Type":"extend",
+      "fromStore":50,
+      "toStore":50,
+      "fromPoint":4,
+      "toPoint":20,
+      "Master":true, 
+      "URL":"alpha"
     }
   ]
 }

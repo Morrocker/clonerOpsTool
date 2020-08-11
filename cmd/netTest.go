@@ -6,8 +6,12 @@ import (
 
 var netTestCmd = &cobra.Command{
 	Use:   "netTest",
-	Short: "Escaneo del estado de la red.",
-	Long: `netTest permite realizar un analisis basico de
+	Short: "Scan to assess transfer rates between servers.",
+	Long: `The netTest tool allows basic analisis to determine the data transfer rate between two or more targets in order to assess local network status. 
+	
+The scan makes use of the Iperf4 analisis tool, available on MacOsX and Linux systems and as such assumes that all devices involved on a test already have the tool installed.
+
+The toolnetTest permite realizar un analisis basico de
 la calidad de transferencia de informacion, a traves de la red,
 entre 2 o mas dispositivos ubicados en la misma red local.
 
