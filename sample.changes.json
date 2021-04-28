@@ -1,0 +1,17 @@
+{
+  "Instructions":[
+    {
+      "Type":"change",
+      "fromStore":5,
+      "toStore":30,
+      "fromPoint":0,
+      "toPoint":4,
+      "URL":"alpha",
+      "Master":true, 
+      "ChangedParams":{
+        "Capacity": 30,
+        "backend": "bar"
+      }
+    }
+  ]
+}
