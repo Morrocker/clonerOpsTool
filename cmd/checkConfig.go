@@ -1,8 +1,7 @@
 package cmd
 
 import (
-	"fmt"
-
+	"github.com/morrocker/log"
 	"github.com/spf13/cobra"
 )
 
@@ -17,15 +16,13 @@ Cobra is a CLI library for Go that empowers applications.
 This application is a tool to generate the needed files
 to quickly create a Cobra application.`,
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println("Checking config for issues")
+		log.Task("Checking config %s for issues", stConf)
 		config.Load(stConf)
-		fmt.Println(stConf)
-		if issues := config.Check(); issues {
-			fmt.Println("Issues found with config")
+		if err := config.Check(); err != nil {
+			log.Info("Issues found on target config")
 		}
 
-		fmt.Println("No issues found on target config")
-		// spew.Dump(config)
+		log.Info("No issues found on target config")
 		return
 	},
 }

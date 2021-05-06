@@ -2,10 +2,12 @@ package confeditor
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
 	"io/ioutil"
 	"strings"
+
+	"github.com/morrocker/errors"
+	"github.com/morrocker/log"
 )
 
 // Instructions receives the JSON info that details instructions about how to modify the storage_config.json file
@@ -38,21 +40,20 @@ type changeStore struct {
 	Run      interface{} `json:"Run"`
 }
 
-// Run asdlkfj asdflkja sldfkj a
+// Run executes all config instructions in order
 func (i *Instructions) Run(s *StorageConfig) error {
 	fmt.Println("Starting run")
 	for x, ins := range i.Instructions {
-		fmt.Printf("\nRunning instruction %d, type %s\n", x+1, ins.Type)
+		log.Task("Running instruction %d, type %s", x+1, ins.Type)
 		if e := ins.run(s); e != nil {
-			return e
+			return errors.Extend("instructions.Run()", e)
 		}
-		// fmt.Println("Resulting Stores")
 	}
-	// spew.Dump(s)
 	return nil
 }
 
 func (i *Instruction) run(c *StorageConfig) error {
+	op := "instructions.run()"
 	t := strings.ToLower(i.Type)
 	if i.FromStore == 0 {
 		i.FromStore = 1
@@ -64,36 +65,33 @@ func (i *Instruction) run(c *StorageConfig) error {
 	case "add":
 		for s := i.FromStore; s <= i.ToStore; s++ {
 			if e := c.AddStore(i.URL, s, i.FromPoint, i.ToPoint, i.Master); e != nil {
-				return e
+				return errors.Extend(op, e)
 			}
 		}
 	case "extend":
 		for s := i.FromStore; s <= i.ToStore; s++ {
 			if e := c.ExtendStore(i.URL, s, i.ToPoint, i.Master); e != nil {
-				return e
+				return errors.Extend(op, e)
 			}
 		}
 	case "change":
 		for s := i.FromStore; s <= i.ToStore; s++ {
 			for p := i.FromPoint; p <= i.ToPoint; p++ {
-				st, e := c.GetStore(i.URL, s, p)
-				if e != nil {
-					fmt.Println(e)
-					continue
+				st, err := c.GetStore(i.URL, s, p)
+				if err != nil {
+					return errors.Extend(op, err)
 				}
-				if e := st.ModifyStore(i.ChangedParams); e != nil {
-					return e
+				if err := st.ModifyStore(i.ChangedParams); err != nil {
+					return errors.Extend(op, err)
 				}
 			}
 		}
 		c.SortStores()
-		if e := c.Check(); e {
-			err := errors.New("Resulting modifications create issues. Exiting")
-			return err
+		if err := c.Check(); err != nil {
+			return errors.Extend(op, err)
 		}
 	default:
-		err := errors.New("Instruction type not found")
-		return err
+		return errors.New(op, "Instruction type not found")
 	}
 	return nil
 }
