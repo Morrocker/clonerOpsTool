@@ -63,44 +63,44 @@ type IDData struct {
 	port     int
 }
 
-// Load asdf aasdf asdf
+// Load loads the storage configguration JSON file into the StorageConfig object
 func (c *StorageConfig) Load(st string) error {
+	op := "storageconfig.Load()"
 	f, err := ioutil.ReadFile(st)
 	if err != nil {
-		return err
+		return errors.Extend(op, err)
 	}
 
 	err = json.Unmarshal([]byte(f), c)
 	if err != nil {
-		return err
+		return errors.Extend(op, err)
 	}
-	// spew.Dump(data)
-
 	c.GetStoresData()
 	c.SortStores()
 	return nil
 }
 
-// Write asdf adf asdf
+// Write StorageConfig into a JSON file with the given name
 func (c *StorageConfig) Write(name string) error {
+	op := "storageconfig.Write()"
 	file, err := json.MarshalIndent(c, "", " ")
 	if err != nil {
-		return err
+		return errors.Extend(op, err)
 	}
 	err = ioutil.WriteFile(name, file, 0644)
 	if err != nil {
-		return err
+		return errors.Extend(op, err)
 
 	}
-	fmt.Printf("JSON data writen to file %s\n", name)
+	log.Info("JSON data writen to file %s", name)
 	return nil
 }
 
-// GetStoresData asdfsa asdf asdf
+// GetStoresData travels all stores in the StorageConfig and set the IDData for each one
 func (c *StorageConfig) GetStoresData() error {
 	for i := range c.Stores {
 		if err := c.Stores[i].getData(); err != nil {
-			return err
+			return errors.Extend("storageconfig.GetStoreData()", err)
 		}
 	}
 	return nil
@@ -277,6 +277,34 @@ func (c *StorageConfig) AddStore(svName string, stNum, fromPoint, toPoint int, m
 		c.Stores = bkpStores
 		log.Info("Errors found in resulting stores. Doing rollback")
 		return errors.Extend(op, err)
+	}
+	return nil
+}
+
+// RemoveStore removes the target stores from the StorageConfig object
+func (c *StorageConfig) RemoveStore(svName string, st, from, to int) {
+	newStores := []Store{}
+	for _, store := range c.Stores {
+		if svName != store.Data.dns || store.Data.StoreNum != st {
+			newStores = append(newStores, store)
+		} else {
+			for x := from; x <= to; x++ {
+				if store.Data.PointNum == x {
+					continue
+				} else {
+					newStores = append(newStores, store)
+				}
+			}
+		}
+	}
+	c.Stores = newStores
+}
+
+// RenewStore replaces an existing point for a new one. Maintaining directory path, but assigning new port.
+func (c *StorageConfig) RenewStore(svName string, st, from, to int, master bool) error {
+	c.RemoveStore(svName, st, from, to)
+	if err := c.AddStore(svName, st, from, to, master); err != nil {
+		return errors.Extend("storageconfig.RenewStore()", err)
 	}
 	return nil
 }

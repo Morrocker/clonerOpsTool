@@ -2,7 +2,6 @@ package confeditor
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"strings"
 
@@ -42,7 +41,7 @@ type changeStore struct {
 
 // Run executes all config instructions in order
 func (i *Instructions) Run(s *StorageConfig) error {
-	fmt.Println("Starting run")
+	log.Taskln("Starting run")
 	for x, ins := range i.Instructions {
 		log.Task("Running instruction %d, type %s", x+1, ins.Type)
 		if e := ins.run(s); e != nil {
@@ -74,6 +73,14 @@ func (i *Instruction) run(c *StorageConfig) error {
 				return errors.Extend(op, e)
 			}
 		}
+	case "delete":
+		for s := i.FromStore; s <= i.ToStore; s++ {
+			c.RemoveStore(i.URL, s, i.FromPoint, i.ToPoint)
+		}
+	case "renew":
+		for s := i.FromStore; s <= i.ToStore; s++ {
+			c.RenewStore(i.URL, s, i.FromPoint, i.ToPoint, i.Master)
+		}
 	case "change":
 		for s := i.FromStore; s <= i.ToStore; s++ {
 			for p := i.FromPoint; p <= i.ToPoint; p++ {
@@ -96,18 +103,16 @@ func (i *Instruction) run(c *StorageConfig) error {
 	return nil
 }
 
-// Load asdfa dfa asdfk asldfkj a
+// Load loads the given instruction JSON file into the instructions object
 func (i *Instructions) Load(name string) error {
+	op := "instructions.Load()"
 	file, err := ioutil.ReadFile(name)
 	if err != nil {
-		return err
+		return errors.Extend(op, err)
 	}
-
 	err = json.Unmarshal([]byte(file), &i)
 	if err != nil {
-		return err
+		return errors.Extend(op, err)
 	}
-	// spew.Dump(data)
 	return nil
-
 }
