@@ -1,0 +1,13 @@
+{
+  "Instructions":[
+    {
+      "Type":"renew",
+      "fromStore":1,
+      "toStore":1,
+      "fromPoint":1,
+      "toPoint":4,
+      "URL":"zulu",
+      "Master":true
+    }
+  ]
+}

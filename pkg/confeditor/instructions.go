@@ -73,7 +73,7 @@ func (i *Instruction) run(c *StorageConfig) error {
 				return errors.Extend(op, e)
 			}
 		}
-	case "delete":
+	case "remove":
 		for s := i.FromStore; s <= i.ToStore; s++ {
 			c.RemoveStore(i.URL, s, i.FromPoint, i.ToPoint)
 		}
@@ -93,12 +93,12 @@ func (i *Instruction) run(c *StorageConfig) error {
 				}
 			}
 		}
-		c.SortStores()
-		if err := c.Check(); err != nil {
-			return errors.Extend(op, err)
-		}
 	default:
 		return errors.New(op, "Instruction type not found")
+	}
+	c.SortStores()
+	if err := c.Check(); err != nil {
+		return errors.Extend(op, err)
 	}
 	return nil
 }

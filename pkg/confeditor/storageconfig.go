@@ -26,6 +26,7 @@ type Store struct {
 	Magic    string `json:"Magic"`
 	CertFile string `json:"CertFile"`
 	KeyFile  string `json:"KeyFile"`
+	Legacy   bool   `json:"Legacy"`
 	Insecure bool   `json:"Insecure"`
 	Open     bool   `json:"Open"`
 	Run      bool   `json:"Run"`
@@ -258,6 +259,7 @@ func (c *StorageConfig) AddStore(svName string, stNum, fromPoint, toPoint int, m
 			Magic:    fmt.Sprintf("%s_s%s_%s", svName, store, sPoint),
 			CertFile: fmt.Sprintf("/etc/letsencrypt/live/%s.cloner.cl/fullchain.pem", svName),
 			KeyFile:  fmt.Sprintf("/etc/letsencrypt/live/%s.cloner.cl/privkey.pem", svName),
+			Legacy:   false,
 			Insecure: false,
 			Open:     true,
 			Run:      master,
@@ -283,17 +285,17 @@ func (c *StorageConfig) AddStore(svName string, stNum, fromPoint, toPoint int, m
 
 // RemoveStore removes the target stores from the StorageConfig object
 func (c *StorageConfig) RemoveStore(svName string, st, from, to int) {
+	log.Task("Removing store %d from point %d to %d from server %s", st, from, to, svName)
+	svDns := fmt.Sprintf("%s.cloner.cl", svName)
 	newStores := []Store{}
 	for _, store := range c.Stores {
-		if svName != store.Data.dns || store.Data.StoreNum != st {
+		if svDns != store.Data.dns || store.Data.StoreNum != st {
 			newStores = append(newStores, store)
 		} else {
-			for x := from; x <= to; x++ {
-				if store.Data.PointNum == x {
-					continue
-				} else {
-					newStores = append(newStores, store)
-				}
+			if store.Data.PointNum >= from && store.Data.PointNum <= to {
+				continue
+			} else {
+				newStores = append(newStores, store)
 			}
 		}
 	}

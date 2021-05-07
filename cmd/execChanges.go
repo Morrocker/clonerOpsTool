@@ -40,5 +40,4 @@ func init() {
 	configEditorCmd.AddCommand(execChangesCmd)
 
 	execChangesCmd.Flags().StringVarP(&insFile, "instructions", "i", "changes.json", "Sets filename that specifies instructions that will be executed.")
-	execChangesCmd.MarkFlagRequired("instructions")
 }
