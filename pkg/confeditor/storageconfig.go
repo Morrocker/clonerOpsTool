@@ -266,7 +266,7 @@ func (c *StorageConfig) AddStore(svName string, stNum, fromPoint, toPoint int, m
 		}
 
 		newStore.Options.BasePath = fmt.Sprintf("/storage%s/point%s", store, sPoint)
-		newStore.Options.Backend = "disk"
+		newStore.Options.Backend = "block_bank"
 
 		newStores = append(newStores, newStore)
 		point++
